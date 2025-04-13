@@ -23,7 +23,7 @@ const Projects = () => {
 
 
       <div className="bg-[#FFDEDE] flex justify-center items-center w-full min-h-screen rounded-3xl mt-12 mx-auto px-4 sm:px-6">
-  <div className="flex flex-col md:flex-row items-center max-w-full p-4 sm:p-8 text-[#FF0B55]">
+  <div className="flex flex-col md:flex-row items-center max-w-full p-4 sm:p-8 text-black">
     {/* Left Section */}
     <div className="md:w-1/2 p-4 sm:p-6">
       <motion.h2
