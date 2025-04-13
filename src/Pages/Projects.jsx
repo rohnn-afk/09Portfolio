@@ -21,6 +21,97 @@ const Projects = () => {
         />
       </div>
 
+
+      <div className="bg-[#FFDEDE] flex justify-center items-center w-full min-h-screen rounded-3xl mt-12 mx-auto px-4 sm:px-6">
+  <div className="flex flex-col md:flex-row items-center max-w-full p-4 sm:p-8 text-[#FF0B55]">
+    {/* Left Section */}
+    <div className="md:w-1/2 p-4 sm:p-6">
+      <motion.h2
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut", delay: 0.4 }}
+        viewport={{ once: true }}
+        className="text-3xl sm:text-4xl md:text-5xl font-semibold mb-4 leading-snug"
+      >
+        VIEWCOUNT - SAAS 
+      </motion.h2>
+      <motion.p
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, ease: "easeOut", delay: 0.6 }}
+        viewport={{ once: true }}
+        className="mb-4 text-base sm:text-lg"
+      >
+        OpenSource - Comprehensive, Real-Time Website Analytics Platform with Seamless Integration, Customizable Event Tracking, and User-Friendly Dashboards.
+      </motion.p>
+      <motion.ul
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3, ease: "easeOut", delay: 0.6 }}
+        viewport={{ once: true }}
+        className="space-y-4 mt-8 sm:mt-12"
+      >
+        {[
+  "Your websites analytics with customizable event tracking and visualizations.",
+  "User and project management with JWT authentication and secure API key handling.",
+  "Easy-to-integrate JavaScript SDK for tracking events like page views and clicks.",
+  "Admin panel for managing users, projects, and detailed event data.",
+  "Responsive UI with comprehensive analytics across all screen sizes."
+].map((text, index) => (
+          <li key={index} className="flex  items-center">
+            <div className="p-1 bg-[#CF0F47] rounded-full mr-4 mt-1">
+              <img src="/SRUYCsunFdEfNhMPXKrf33ZFSPQ.png" className="w-4 h-4" />
+            </div>
+            {text}
+          </li>
+        ))}
+      </motion.ul>
+      <motion.button
+      onClick={()=>{ window.open('https://viewcount-frontend.onrender.com/', '_blank')}}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: 'easeOut', delay: 0.7 }}
+              className="px-5 py-2 mt-12 pr-7 rounded-full text-sm flex items-center w-36 min-w-24 bg-[#CF0F47] text-white  relative overflow-hidden"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              <p className="text-base"> website</p>
+              <motion.div
+                className="w-2 h-2 absolute top-2 right-6 text-white"
+                animate={isHovered ? { x: 15, opacity: 0 } : { x: 0, opacity: 1 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+              >
+                <ArrowRight />
+              </motion.div>
+              <motion.div
+                className="w-2 h-2 absolute top-2 right-6 text-white"
+                animate={isHovered ? { x: 0, opacity: 1 } : { x: -15, opacity: 0 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+              >
+                <ArrowRight />
+              </motion.div>
+            </motion.button>
+    </div>
+
+    {/* Right Section */}
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut", delay: 0.4 }}
+      viewport={{ once: true }}
+      className="bg-[#FF0B55] p-4 sm:p-10 rounded-2xl mt-10 md:mt-0 md:ml-10"
+    >
+      <img
+        src="/viewcount.png"
+        className="w-full h-auto max-w-full"
+      />
+    </motion.div>
+  </div>
+</div>
+
+
+
+
 <div className="bg-[#F16767] flex justify-center items-center w-full min-h-screen rounded-3xl mt-12 mx-auto px-4 sm:px-6">
       <div className="flex flex-col md:flex-row items-center max-w-full p-4 sm:p-8 text-[#FFF085]">
     {/* Left Section */}

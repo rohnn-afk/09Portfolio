@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from "framer-motion";
-import { Mail, Github, Linkedin, Globe } from "lucide-react";
+import { Mail, Github, Linkedin, MessageCircle } from "lucide-react";
 
 
 const Contactme = () => {
@@ -128,9 +128,9 @@ const links = [
       icon: <Mail className="w-6 h-6 text-green-500" />,
     },
     {
-      name: "",
+      name: "Whatsapp - 8920519536",
       url: "",
-      icon: <Globe className="w-6 h-6 text-green-500" />,
+      icon: <MessageCircle className="w-6 h-6 text-green-500" />,
     },
   ];
 
