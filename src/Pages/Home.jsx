@@ -235,9 +235,9 @@ viewport={{ once: true }}
             style={{ x: items.bio.x, y: items.bio.y }}
             >
             <h1 className="text-3xl font-bold underline">BIO:</h1>
-            <h1 className="text-base mt-5">24 YEAR OLD,</h1>
-            <h1 className="text-base mt-2">Post-Graduated,</h1>
-            <h1 className="text-xl mt-7">"I WILL GIVE MY EVERYTHING TO CODE.."</h1>
+            <h1 className="text-base font-bold mt-5">24 YEAR OLD,</h1>
+            <h1 className="text-base font-bold mt-2">Post-Graduated,</h1>
+            <h1 className="text-xl font-bold mt-7">"I WILL GIVE MY EVERYTHING TO INNOVATION..."</h1>
           </motion.div>
 </div>
       </div>
