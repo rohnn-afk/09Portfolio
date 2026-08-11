@@ -13,13 +13,17 @@
 }
 
 html, body {
-  overflow-x: hidden;
   margin: 0;
   padding: 0;
-  width: 100vw;
-  overflow-y: scroll;
-  scrollbar-width: none;
-  overscroll-behavior: none
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
 }
 
 .hero-title {

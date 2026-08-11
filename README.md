@@ -1,12 +1,50 @@
-# React + Vite
+# Rohan Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal portfolio built with React, TypeScript, Vite, Tailwind CSS, Framer Motion, and Bun.
 
-Currently, two official plugins are available:
+## Requirements
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Bun `1.3.14`
 
-## Expanding the ESLint configuration
+## Scripts
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+bun install
+bun run dev
+bun run typecheck
+bun run lint
+bun run build
+bun run preview
+```
+
+## Project Structure
+
+```text
+src/
+  assets/       Reusable visual and interaction primitives
+  components/   Shared UI components
+  data/         Typed portfolio content
+  Pages/        Page-level sections
+  types/        Shared TypeScript domain types
+```
+
+## Quality Gates
+
+Before shipping changes, run:
+
+```bash
+bun run typecheck
+bun run lint
+bun run build
+```
+
+## CI/CD
+
+GitHub Actions runs the same quality gates with Bun on pull requests and pushes to `main`.
+
+Production deploys publish the Vite `dist/` output to GitHub Pages from `main`.
+
+## Architecture Notes
+
+Project content lives in `src/data/projects.ts` and follows the `Project` type in `src/types/project.ts`.
+The project section UI is rendered by `src/components/ProjectSection.tsx`, keeping data changes separate from layout changes.
