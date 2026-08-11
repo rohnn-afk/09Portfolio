@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Check } from 'lucide-react';
 import type { Project } from '../types/project';
 import { fadeUp, hoverIconTransition, revealTransition, revealViewport } from '../lib/animations';
+import { assetPath } from '../lib/assetPath';
 
 type ProjectSectionProps = {
   project: Project;
@@ -163,7 +164,7 @@ export function ProjectSection({ project, index }: ProjectSectionProps) {
           </div>
           <div className="aspect-[16/10] overflow-hidden rounded-2xl bg-white/80">
             <img
-              src={project.image.src}
+              src={assetPath(project.image.src)}
               alt={project.image.alt}
               className="h-full w-full max-w-full object-contain transition-transform duration-500 group-hover:scale-[1.025]"
             />

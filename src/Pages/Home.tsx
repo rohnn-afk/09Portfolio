@@ -9,6 +9,7 @@ import {
   slideInRight,
   springRevealTransition,
 } from '../lib/animations';
+import { assetPath } from '../lib/assetPath';
 
 type ScreenSupportProps = {
   isScreenSupported: boolean;
@@ -65,7 +66,7 @@ const BrandIconBadge = ({ name, slug, color, src, className, size, parallax }: B
     aria-label={name}
   >
     <img
-      src={src ?? simpleIconUrl(slug, color)}
+      src={src ? (src.startsWith('http') ? src : assetPath(src)) : simpleIconUrl(slug, color)}
       alt=""
       draggable={false}
       loading="lazy"
@@ -369,14 +370,14 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
               aria-label="Developer toolkit visual"
             >
               <motion.img
-                src="/7d0944e4-ee5e-48d9-99a9-a9f8eaece544.jpg"
+                src={assetPath('/7d0944e4-ee5e-48d9-99a9-a9f8eaece544.jpg')}
                 alt="Landscape illustration"
                 draggable={false}
                 className="absolute bottom-12 left-1/2 w-[min(46%,22rem)] -translate-x-1/2 rounded-3xl object-cover shadow-[0_24px_70px_rgba(15,23,42,0.20)]"
               />
 
               <motion.img
-                src="/React-icon.svg"
+                src={assetPath('/React-icon.svg')}
                 alt="React"
                 draggable={false}
                 className="absolute -bottom-12 left-0 w-32 drop-shadow-xl md:w-40"
@@ -384,7 +385,7 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
               />
 
               <motion.img
-                src="/github-mark.svg"
+                src={assetPath('/github-mark.svg')}
                 alt="GitHub"
                 draggable={false}
                 className="absolute bottom-36 right-12 w-24 md:w-28"
@@ -392,7 +393,7 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
               />
 
               <motion.img
-                src="/icons8-javascript.gif"
+                src={assetPath('/icons8-javascript.gif')}
                 alt="JavaScript"
                 draggable={false}
                 className="absolute left-8 -top-16 w-12 rounded-xl md:w-14"
@@ -400,7 +401,7 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
               />
 
               <motion.img
-                src="/icons8-node-js.svg"
+                src={assetPath('/icons8-node-js.svg')}
                 alt="Node.js"
                 draggable={false}
                 className="absolute -left-24 top-40 w-12 rounded-xl bg-white md:w-14"
@@ -408,7 +409,7 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
               />
 
               <motion.img
-                src="/MongoDB_SpringGreen.png"
+                src={assetPath('/MongoDB_SpringGreen.png')}
                 alt="MongoDB"
                 draggable={false}
                 className="absolute -right-28 top-28 w-36 md:w-44"
@@ -416,7 +417,7 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
               />
 
               <motion.img
-                src="/icons8-vs-code-48.png"
+                src={assetPath('/icons8-vs-code-48.png')}
                 alt="Visual Studio Code"
                 draggable={false}
                 className="absolute left-40 -top-10 w-12 rounded-xl md:w-14"

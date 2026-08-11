@@ -9,6 +9,7 @@ import {
   slideInRight,
   springRevealTransition,
 } from '../lib/animations';
+import { assetPath } from '../lib/assetPath';
 
 type ContactLink = {
   name: string;
@@ -124,7 +125,7 @@ const Contactme = () => {
                   whileInView="visible"
                   transition={springRevealTransition(0.25)}
                   viewport={revealViewport}
-                  src="/download-removebg-preview.png"
+                  src={assetPath('/download-removebg-preview.png')}
                   alt="Rohan"
                   draggable={false}
                   className="absolute inset-x-0 bottom-0 mx-auto max-h-[23rem] object-contain"
