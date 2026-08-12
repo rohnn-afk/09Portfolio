@@ -5,7 +5,7 @@ import { revealViewport, slideInRight, springRevealTransition } from '../lib/ani
 
 const Header = () => {
   return (
-    <section className="flex w-full flex-col items-center py-36 text-black dark:text-white sm:py-44 lg:py-52">
+    <section className="flex w-full flex-col items-center pb-16 pt-36 text-black dark:text-white sm:pb-20 sm:pt-44 lg:pb-24 lg:pt-52">
             <div className='relative w-full space-y-5 overflow-visible py-6'>
 
                 <Marquee deg={`rotate-[1deg]`}/>

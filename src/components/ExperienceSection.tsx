@@ -8,7 +8,7 @@ const ExperienceSection = () => {
   return (
     <section
       id="experience"
-      className="relative w-full scroll-mt-20 px-6 pb-32 pt-20 text-black dark:text-white sm:px-10 sm:pb-40 sm:pt-24 lg:px-16 lg:pb-48 lg:pt-28"
+      className="relative w-full scroll-mt-20 px-6 pb-20 pt-20 text-black dark:text-white sm:px-10 sm:pb-24 sm:pt-24 lg:px-16 lg:pb-28 lg:pt-28"
     >
       <div className="mx-auto w-full max-w-[92rem]">
         <motion.div

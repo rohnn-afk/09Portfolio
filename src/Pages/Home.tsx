@@ -160,7 +160,7 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
 
       <div
         id="about"
-        className="relative isolate flex w-full flex-col items-center overflow-hidden px-6 pb-20 pt-40 text-black dark:text-white sm:px-10 sm:pb-24 sm:pt-48 lg:px-16 lg:pb-28 lg:pt-56"
+        className="relative isolate flex w-full flex-col items-center overflow-hidden px-6 pb-20 pt-20 text-black dark:text-white sm:px-10 sm:pb-24 sm:pt-24 lg:px-16 lg:pb-28 lg:pt-28"
       >
         <div className="relative z-10 mx-auto grid w-full max-w-[100rem] items-start gap-16 lg:grid-cols-[minmax(0,1.05fr)_minmax(540px,0.95fr)] lg:gap-44 xl:gap-56">
           <div className="flex max-w-4xl flex-col gap-8">
@@ -290,7 +290,7 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
           </motion.div>
         </div>
 
-        <div className="relative z-10 mx-auto mt-48 grid w-full max-w-[94rem] items-center gap-12 sm:mt-56 lg:mt-72 lg:grid-cols-[minmax(480px,1.1fr)_minmax(360px,0.65fr)] lg:gap-16">
+        <div className="relative z-10 mx-auto mt-24 grid w-full max-w-[94rem] items-center gap-12 sm:mt-28 lg:mt-32 lg:grid-cols-[minmax(480px,1.1fr)_minmax(360px,0.65fr)] lg:gap-16">
           {isScreenSupported && (
             <motion.div
               variants={fadeUp}

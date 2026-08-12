@@ -7,7 +7,7 @@ const Projects = () => {
   return (
     <section
       id="project"
-      className="relative w-full px-6 py-32 text-black dark:text-white sm:px-10 sm:py-40 lg:px-16 lg:py-48"
+      className="relative w-full px-6 pb-32 pt-20 text-black dark:text-white sm:px-10 sm:pb-40 sm:pt-24 lg:px-16 lg:pb-48 lg:pt-28"
     >
       <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-center text-center">
         <motion.p
