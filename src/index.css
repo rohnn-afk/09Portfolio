@@ -32,6 +32,35 @@ html {
   font-weight: 700;
 }
 
+@keyframes toolkit-orbit {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translate3d(var(--orbit-radius-x), 0, 0) scale(0.95);
+    opacity: 0.79;
+  }
+
+  25% {
+    transform: translate(-50%, -50%) translate3d(0, var(--orbit-radius-y), 0) scale(1.12);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translate(-50%, -50%) translate3d(calc(0px - var(--orbit-radius-x)), 0, 0) scale(0.95);
+    opacity: 0.79;
+  }
+
+  75% {
+    transform: translate(-50%, -50%) translate3d(0, calc(0px - var(--orbit-radius-y)), 0) scale(0.78);
+    opacity: 0.58;
+  }
+}
+
+.toolkit-orbit-badge {
+  animation: toolkit-orbit 34s linear infinite;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

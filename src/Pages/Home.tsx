@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { useEffect, useState, type CSSProperties } from 'react';
+import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import {
   fadeUp,
@@ -23,13 +23,15 @@ type BrandIconBadgeProps = {
   angle: number;
   radiusX?: number;
   radiusY?: number;
-  shouldReduceMotion: boolean;
+};
+
+type OrbitBadgeStyle = CSSProperties & {
+  '--orbit-radius-x': string;
+  '--orbit-radius-y': string;
 };
 
 const simpleIconUrl = (slug: string, color: string) =>
   `https://cdn.simpleicons.org/${slug}/${color}`;
-
-const orbitSteps = [0, 45, 90, 135, 180, 225, 270, 315, 360] as const;
 
 const BrandIconBadge = ({
   name,
@@ -39,36 +41,17 @@ const BrandIconBadge = ({
   angle,
   radiusX = 285,
   radiusY = 132,
-  shouldReduceMotion,
 }: BrandIconBadgeProps) => {
-  const frames = orbitSteps.map((step) => {
-    const radians = ((angle + step) * Math.PI) / 180;
-    const depth = Math.sin(radians);
-
-    return {
-      x: Math.cos(radians) * radiusX,
-      y: Math.sin(radians) * radiusY,
-      scale: 0.78 + ((depth + 1) / 2) * 0.34,
-      opacity: 0.58 + ((depth + 1) / 2) * 0.42,
-    };
-  });
-  const initialFrame = frames[0];
+  const orbitStyle: OrbitBadgeStyle = {
+    '--orbit-radius-x': `${radiusX}px`,
+    '--orbit-radius-y': `${radiusY}px`,
+    animationDelay: `${-(angle / 360) * 34}s`,
+  };
 
   return (
-    <motion.div
-      className="absolute left-1/2 top-[52%] z-10 grid h-16 w-16 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-2xl border border-zinc-200/80 bg-white/92 p-3 shadow-[0_14px_34px_rgba(15,23,42,0.12)] backdrop-blur dark:border-white/15 dark:bg-white/90"
-      initial={false}
-      animate={shouldReduceMotion ? initialFrame : {
-        x: frames.map((frame) => frame.x),
-        y: frames.map((frame) => frame.y),
-        scale: frames.map((frame) => frame.scale),
-        opacity: frames.map((frame) => frame.opacity),
-      }}
-      transition={shouldReduceMotion ? undefined : {
-        duration: 34,
-        ease: 'linear',
-        repeat: Infinity,
-      }}
+    <div
+      className="toolkit-orbit-badge absolute left-1/2 top-[52%] z-10 grid h-16 w-16 place-items-center rounded-2xl border border-zinc-200/80 bg-white/92 p-3 shadow-[0_14px_34px_rgba(15,23,42,0.12)] backdrop-blur dark:border-white/15 dark:bg-white/90"
+      style={orbitStyle}
       role="img"
       aria-label={name}
     >
@@ -81,7 +64,7 @@ const BrandIconBadge = ({
         className="h-full w-full object-contain"
         aria-hidden="true"
       />
-    </motion.div>
+    </div>
   );
 };
 
@@ -154,7 +137,6 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
 
   const [scrollWidth, setScrollWidth] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const shouldReduceMotion = useReducedMotion() ?? false;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -352,7 +334,6 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
                 slug="react"
                 color="61DAFB"
                 angle={0}
-                shouldReduceMotion={shouldReduceMotion}
               />
 
               <BrandIconBadge
@@ -360,7 +341,6 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
                 slug="github"
                 color="181717"
                 angle={33}
-                shouldReduceMotion={shouldReduceMotion}
               />
 
               <BrandIconBadge
@@ -368,7 +348,6 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
                 slug="javascript"
                 color="F7DF1E"
                 angle={65}
-                shouldReduceMotion={shouldReduceMotion}
               />
 
               <BrandIconBadge
@@ -376,7 +355,6 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
                 slug="nodedotjs"
                 color="339933"
                 angle={98}
-                shouldReduceMotion={shouldReduceMotion}
               />
 
               <BrandIconBadge
@@ -384,14 +362,12 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
                 slug="mongodb"
                 color="47A248"
                 angle={131}
-                shouldReduceMotion={shouldReduceMotion}
               />
 
               <BrandIconBadge
                 name="Visual Studio Code"
                 src="/icons8-vs-code-48.png"
                 angle={164}
-                shouldReduceMotion={shouldReduceMotion}
               />
 
               <BrandIconBadge
@@ -399,7 +375,6 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
                 slug="postgresql"
                 color="336791"
                 angle={196}
-                shouldReduceMotion={shouldReduceMotion}
               />
 
               <BrandIconBadge
@@ -407,7 +382,6 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
                 slug="redis"
                 color="DC382D"
                 angle={229}
-                shouldReduceMotion={shouldReduceMotion}
               />
 
               <BrandIconBadge
@@ -416,7 +390,6 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
                 color="232F3E"
                 src="/aws.svg"
                 angle={262}
-                shouldReduceMotion={shouldReduceMotion}
               />
 
               <BrandIconBadge
@@ -424,7 +397,6 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
                 slug="cloudflare"
                 color="F38020"
                 angle={295}
-                shouldReduceMotion={shouldReduceMotion}
               />
 
               <BrandIconBadge
@@ -432,7 +404,6 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
                 slug="solidity"
                 color="363636"
                 angle={327}
-                shouldReduceMotion={shouldReduceMotion}
               />
               </div>
             </motion.div>
