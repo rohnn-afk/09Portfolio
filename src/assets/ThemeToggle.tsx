@@ -1,28 +1,36 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { Moon, Sun } from "lucide-react";
 
-const ThemeToggle = () => {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+type Theme = "light" | "dark";
 
-  useEffect(() => {
+const getInitialTheme = (): Theme => {
+  try {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "dark" || savedTheme === "light") {
-      setTheme(savedTheme);
-      return;
+      return savedTheme;
     }
+  } catch {
+    // Storage can be unavailable in privacy-restricted browsing contexts.
+  }
 
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setTheme("dark");
-    }
-  }, []);
+  return window.matchMedia?.("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+};
+
+const ThemeToggle = () => {
+  const [theme, setTheme] = useState<Theme>(getInitialTheme);
+
+  useLayoutEffect(() => {
+    document.documentElement.classList.toggle("dark", theme === "dark");
+  }, [theme]);
 
   useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
+    try {
+      localStorage.setItem("theme", theme);
+    } catch {
+      // The selected theme still works for this session when storage is blocked.
     }
-    localStorage.setItem("theme", theme);
   }, [theme]);
 
   return (

@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import {
   fadeUp,
@@ -15,66 +15,75 @@ type ScreenSupportProps = {
   isScreenSupported: boolean;
 };
 
-const useParallax = (multiplier: number) => {
-  const rawX = useMotionValue(0);
-  const rawY = useMotionValue(0);
-  const x = useSpring(rawX, { stiffness: 40, damping: 12 });
-  const y = useSpring(rawY, { stiffness: 40, damping: 12 });
-
-  return useMemo(
-    () => ({ rawX, rawY, x, y, multiplier }),
-    [rawX, rawY, x, y, multiplier],
-  );
-};
-
 type BrandIconBadgeProps = {
   name: string;
-  slug: string;
-  color: string;
+  slug?: string;
+  color?: string;
   src?: string;
-  className: string;
-  size: 'sm' | 'md' | 'lg' | 'xl';
-  parallax: ReturnType<typeof useParallax>;
+  angle: number;
+  radiusX?: number;
+  radiusY?: number;
+  shouldReduceMotion: boolean;
 };
 
 const simpleIconUrl = (slug: string, color: string) =>
   `https://cdn.simpleicons.org/${slug}/${color}`;
 
-const brandIconSizes = {
-  sm: {
-    shell: 'h-14 w-14',
-    icon: 'h-14 w-14',
-  },
-  md: {
-    shell: 'h-16 w-16',
-    icon: 'h-16 w-16',
-  },
-  lg: {
-    shell: 'h-20 w-20',
-    icon: 'h-20 w-20',
-  },
-  xl: {
-    shell: 'h-24 w-24',
-    icon: 'h-24 w-24',
-  },
-};
+const orbitSteps = [0, 45, 90, 135, 180, 225, 270, 315, 360] as const;
 
-const BrandIconBadge = ({ name, slug, color, src, className, size, parallax }: BrandIconBadgeProps) => (
-  <motion.div
-    className={`absolute grid place-items-center ${brandIconSizes[size].shell} ${className}`}
-    style={{ x: parallax.x, y: parallax.y }}
-    aria-label={name}
-  >
-    <img
-      src={src ? (src.startsWith('http') ? src : assetPath(src)) : simpleIconUrl(slug, color)}
-      alt=""
-      draggable={false}
-      loading="lazy"
-      className={`object-contain drop-shadow-[0_18px_26px_rgba(15,23,42,0.20)] dark:drop-shadow-[0_18px_26px_rgba(255,255,255,0.08)] ${brandIconSizes[size].icon}`}
-      aria-hidden="true"
-    />
-  </motion.div>
-);
+const BrandIconBadge = ({
+  name,
+  slug,
+  color,
+  src,
+  angle,
+  radiusX = 285,
+  radiusY = 132,
+  shouldReduceMotion,
+}: BrandIconBadgeProps) => {
+  const frames = orbitSteps.map((step) => {
+    const radians = ((angle + step) * Math.PI) / 180;
+    const depth = Math.sin(radians);
+
+    return {
+      x: Math.cos(radians) * radiusX,
+      y: Math.sin(radians) * radiusY,
+      scale: 0.78 + ((depth + 1) / 2) * 0.34,
+      opacity: 0.58 + ((depth + 1) / 2) * 0.42,
+    };
+  });
+  const initialFrame = frames[0];
+
+  return (
+    <motion.div
+      className="absolute left-1/2 top-[52%] z-10 grid h-16 w-16 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-2xl border border-zinc-200/80 bg-white/92 p-3 shadow-[0_14px_34px_rgba(15,23,42,0.12)] backdrop-blur dark:border-white/15 dark:bg-white/90"
+      initial={false}
+      animate={shouldReduceMotion ? initialFrame : {
+        x: frames.map((frame) => frame.x),
+        y: frames.map((frame) => frame.y),
+        scale: frames.map((frame) => frame.scale),
+        opacity: frames.map((frame) => frame.opacity),
+      }}
+      transition={shouldReduceMotion ? undefined : {
+        duration: 34,
+        ease: 'linear',
+        repeat: Infinity,
+      }}
+      role="img"
+      aria-label={name}
+    >
+      <img
+        src={src ? (src.startsWith('http') ? src : assetPath(src)) : simpleIconUrl(slug ?? '', color ?? '')}
+        alt=""
+        draggable={false}
+        loading="lazy"
+        decoding="async"
+        className="h-full w-full object-contain"
+        aria-hidden="true"
+      />
+    </motion.div>
+  );
+};
 
 type SkillPileItem = {
   label: string;
@@ -133,7 +142,7 @@ const skillChip = {
     scale: 1,
     filter: 'blur(0px)',
     transition: {
-      type: 'spring',
+      type: 'spring' as const,
       stiffness: 82,
       damping: 9,
       mass: 1.45,
@@ -145,53 +154,7 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
 
   const [scrollWidth, setScrollWidth] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-
-  // Parallax items with different strength
-  const imageParallax = useParallax(1.2);
-  const reactParallax = useParallax(4.0);
-  const githubParallax = useParallax(4.0);
-  const jsParallax = useParallax(6.6);
-  const nodeParallax = useParallax(7.9);
-  const mongoParallax = useParallax(4.7);
-  const vscodeParallax = useParallax(5.5);
-  const postgresParallax = useParallax(5.0);
-  const redisParallax = useParallax(6.1);
-  const awsParallax = useParallax(4.4);
-  const cloudflareParallax = useParallax(5.7);
-  const solidityParallax = useParallax(6.8);
-  const bioParallax = useParallax(1.4);
-
-  const items = useMemo(() => ({
-    image: imageParallax,
-    react: reactParallax,
-    github: githubParallax,
-    js: jsParallax,
-    node: nodeParallax,
-    mongo: mongoParallax,
-    vscode: vscodeParallax,
-    postgres: postgresParallax,
-    redis: redisParallax,
-    aws: awsParallax,
-    cloudflare: cloudflareParallax,
-    solidity: solidityParallax,
-    bio: bioParallax,
-  }), [
-    imageParallax,
-    reactParallax,
-    githubParallax,
-    jsParallax,
-    nodeParallax,
-    mongoParallax,
-    vscodeParallax,
-    postgresParallax,
-    redisParallax,
-    awsParallax,
-    cloudflareParallax,
-    solidityParallax,
-    bioParallax,
-  ]);
-
-
+  const shouldReduceMotion = useReducedMotion() ?? false;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -205,22 +168,6 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Apply cursor position to all items
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const { innerWidth, innerHeight } = window;
-      const offsetX = e.clientX - innerWidth / 2;
-      const offsetY = e.clientY - innerHeight / 2;
-
-      Object.values(items).forEach(({ rawX, rawY, multiplier }) => {
-        rawX.set(offsetX * 0.006 * multiplier);
-        rawY.set(offsetY * 0.006 * multiplier);
-      });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [items]);
-
   return (
     <>
       {/* Scroll Progress Bar */}
@@ -231,7 +178,7 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
 
       <div
         id="about"
-        className="relative isolate flex w-full flex-col items-center overflow-hidden px-6 py-40 text-black dark:text-white sm:px-10 sm:py-48 lg:px-16 lg:py-56"
+        className="relative isolate flex w-full flex-col items-center overflow-hidden px-6 pb-20 pt-40 text-black dark:text-white sm:px-10 sm:pb-24 sm:pt-48 lg:px-16 lg:pb-28 lg:pt-56"
       >
         <div className="relative z-10 mx-auto grid w-full max-w-[100rem] items-start gap-16 lg:grid-cols-[minmax(0,1.05fr)_minmax(540px,0.95fr)] lg:gap-44 xl:gap-56">
           <div className="flex max-w-4xl flex-col gap-8">
@@ -243,7 +190,7 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
               viewport={revealViewport}
               className="hero-title text-[clamp(3.5rem,7vw,5.25rem)] leading-[0.95]"
             >
-              <span className="block text-xl font-extrabold uppercase tracking-[0.22em] text-zinc-500 dark:text-zinc-400 sm:text-2xl">I&apos;m</span>
+              <span className="block font-manrope text-sm font-extrabold uppercase tracking-[0.22em] text-[#16C47F] sm:text-base">I&apos;m</span>
               <span className="mt-2 block">ROHAN</span>
             </motion.h1>
 
@@ -263,7 +210,7 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
               viewport={revealViewport}
               className="max-w-3xl text-xl font-semibold leading-relaxed sm:text-2xl"
             >
-              Full-stack developer focused on shipping reliable web products with clean interfaces, typed systems, and backend logic that scales beyond the first demo.
+              Full-stack product engineer building complex systems that connect thoughtful interfaces, reliable backend architecture, AI workflows and production infrastructure.
             </motion.h2>
 
             <motion.p
@@ -274,36 +221,39 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
               viewport={revealViewport}
               className="max-w-2xl text-base leading-7 text-zinc-700 dark:text-zinc-300 sm:text-lg"
             >
-              I work across React, TypeScript, Node.js, databases, AI workflows, and deployment pipelines - turning product ideas into fast, maintainable applications.
+              From React and TypeScript to PostgreSQL, Docker and AWS, I take products from early ideas to secure, maintainable software.
             </motion.p>
 
             <div className="mt-6 flex w-full flex-col items-start gap-4 sm:w-auto sm:flex-row sm:items-center">
-              <motion.button
+              <motion.a
+                href="#contact"
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
                 transition={revealTransition(0.4)}
                 viewport={revealViewport}
-                className="relative flex w-40 min-w-36 items-center overflow-hidden rounded-full bg-[#E9A5F1] px-4 py-2 pr-7 text-sm text-black sm:w-44"
+                className="relative flex min-w-56 items-center overflow-hidden rounded-full bg-[#E9A5F1] px-5 py-3 pr-12 text-sm text-black"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >
-                <p className="text-base font-semibold">Reach Out</p>
-                <motion.div
-                  className="absolute right-5 top-2 h-2 w-2 text-black"
-                  animate={isHovered ? { x: 15, opacity: 0 } : { x: 0, opacity: 1 }}
-                  transition={hoverIconTransition}
-                >
-                  <ArrowRight />
-                </motion.div>
-                <motion.div
-                  className="absolute right-5 top-2 h-2 w-2 text-black"
-                  animate={isHovered ? { x: 0, opacity: 1 } : { x: -15, opacity: 0 }}
-                  transition={hoverIconTransition}
-                >
-                  <ArrowRight />
-                </motion.div>
-              </motion.button>
+                <p className="text-base font-semibold">Let&apos;s Build Something</p>
+                <span className="absolute inset-y-0 right-5 flex w-6 items-center justify-center" aria-hidden="true">
+                  <motion.span
+                    className="absolute flex items-center"
+                    animate={isHovered ? { x: 15, opacity: 0 } : { x: 0, opacity: 1 }}
+                    transition={hoverIconTransition}
+                  >
+                    <ArrowRight size={20} />
+                  </motion.span>
+                  <motion.span
+                    className="absolute flex items-center"
+                    animate={isHovered ? { x: 0, opacity: 1 } : { x: -15, opacity: 0 }}
+                    transition={hoverIconTransition}
+                  >
+                    <ArrowRight size={20} />
+                  </motion.span>
+                </span>
+              </motion.a>
             </div>
           </div>
 
@@ -358,7 +308,7 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
           </motion.div>
         </div>
 
-        <div className="relative z-10 mx-auto mt-48 grid w-full max-w-[90rem] items-center gap-12 sm:mt-56 lg:mt-72 lg:grid-cols-[minmax(420px,0.95fr)_minmax(360px,0.65fr)] lg:gap-20">
+        <div className="relative z-10 mx-auto mt-48 grid w-full max-w-[94rem] items-center gap-12 sm:mt-56 lg:mt-72 lg:grid-cols-[minmax(480px,1.1fr)_minmax(360px,0.65fr)] lg:gap-16">
           {isScreenSupported && (
             <motion.div
               variants={fadeUp}
@@ -366,80 +316,98 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
               whileInView="visible"
               transition={revealTransition(0.1)}
               viewport={revealViewport}
-              className="relative mx-auto h-[42rem] w-full max-w-[54rem] overflow-visible"
+              className="relative isolate mx-auto h-[34rem] w-full max-w-[52rem] overflow-hidden rounded-[2.25rem] border border-zinc-200/80 bg-[radial-gradient(circle_at_50%_48%,rgba(22,196,127,0.10),transparent_34%),linear-gradient(145deg,rgba(255,255,255,0.92),rgba(250,250,250,0.68))] shadow-[0_30px_90px_rgba(15,23,42,0.10)] backdrop-blur dark:border-zinc-800 dark:bg-[radial-gradient(circle_at_50%_48%,rgba(22,196,127,0.12),transparent_34%),linear-gradient(145deg,rgba(9,9,11,0.88),rgba(0,0,0,0.68))]"
               aria-label="Developer toolkit visual"
             >
-              <motion.img
-                src={assetPath('/7d0944e4-ee5e-48d9-99a9-a9f8eaece544.jpg')}
-                alt="Landscape illustration"
-                draggable={false}
-                className="absolute bottom-12 left-1/2 w-[min(46%,22rem)] -translate-x-1/2 rounded-3xl object-cover shadow-[0_24px_70px_rgba(15,23,42,0.20)]"
-              />
+              <div className="absolute inset-x-6 top-6 z-40 flex items-start justify-between gap-5">
+                <div>
+                  <p className="font-manrope text-xs font-extrabold uppercase tracking-[0.22em] text-[#16C47F]">Toolkit</p>
+                  <p className="mt-1.5 text-sm font-semibold text-zinc-600 dark:text-zinc-300">A focused stack for end-to-end delivery.</p>
+                </div>
+                <div className="flex flex-wrap justify-end gap-2" aria-label="Toolkit capabilities">
+                  {['Frontend', 'Backend', 'Cloud'].map((capability) => (
+                    <span key={capability} className="rounded-full border border-zinc-200/90 bg-white/75 px-3 py-1.5 text-[0.65rem] font-extrabold uppercase tracking-[0.14em] text-zinc-600 backdrop-blur dark:border-zinc-700 dark:bg-zinc-900/75 dark:text-zinc-300">
+                      {capability}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="pointer-events-none absolute left-1/2 top-[52%] z-[8] h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(22,196,127,0.18),rgba(22,196,127,0.05)_48%,transparent_72%)]" aria-hidden="true" />
+              <div className="pointer-events-none absolute -right-20 -top-24 h-56 w-56 rounded-full border border-[#16C47F]/10" aria-hidden="true" />
+              <div className="pointer-events-none absolute left-1/2 top-[75%] z-[9] h-4 w-48 -translate-x-1/2 rounded-full bg-zinc-950/15 blur-xl dark:bg-white/10" aria-hidden="true" />
 
               <motion.img
-                src={assetPath('/React-icon.svg')}
-                alt="React"
+                src={assetPath('/developer-character.webp')}
+                alt="Seated developer illustration"
                 draggable={false}
-                className="absolute -bottom-12 left-0 w-32 drop-shadow-xl md:w-40"
-                style={{ x: items.react.x, y: items.react.y }}
+                loading="lazy"
+                decoding="async"
+                className="absolute left-1/2 top-[52%] z-30 w-[min(44%,21rem)] -translate-x-1/2 -translate-y-1/2 object-contain drop-shadow-[0_28px_34px_rgba(15,23,42,0.22)]"
               />
 
-              <motion.img
-                src={assetPath('/github-mark.svg')}
-                alt="GitHub"
-                draggable={false}
-                className="absolute bottom-36 right-12 w-24 md:w-28"
-                style={{ x: items.github.x, y: items.github.y }}
+              <div className="absolute inset-0 z-10 [transform-style:preserve-3d]">
+              <BrandIconBadge
+                name="React"
+                slug="react"
+                color="61DAFB"
+                angle={0}
+                shouldReduceMotion={shouldReduceMotion}
               />
 
-              <motion.img
-                src={assetPath('/icons8-javascript.gif')}
-                alt="JavaScript"
-                draggable={false}
-                className="absolute left-8 -top-16 w-12 rounded-xl md:w-14"
-                style={{ x: items.js.x, y: items.js.y }}
+              <BrandIconBadge
+                name="GitHub"
+                slug="github"
+                color="181717"
+                angle={33}
+                shouldReduceMotion={shouldReduceMotion}
               />
 
-              <motion.img
-                src={assetPath('/icons8-node-js.svg')}
-                alt="Node.js"
-                draggable={false}
-                className="absolute -left-24 top-40 w-12 rounded-xl bg-white md:w-14"
-                style={{ x: items.node.x, y: items.node.y }}
+              <BrandIconBadge
+                name="JavaScript"
+                slug="javascript"
+                color="F7DF1E"
+                angle={65}
+                shouldReduceMotion={shouldReduceMotion}
               />
 
-              <motion.img
-                src={assetPath('/MongoDB_SpringGreen.png')}
-                alt="MongoDB"
-                draggable={false}
-                className="absolute -right-28 top-28 w-36 md:w-44"
-                style={{ x: items.mongo.x, y: items.mongo.y }}
+              <BrandIconBadge
+                name="Node.js"
+                slug="nodedotjs"
+                color="339933"
+                angle={98}
+                shouldReduceMotion={shouldReduceMotion}
               />
 
-              <motion.img
-                src={assetPath('/icons8-vs-code-48.png')}
-                alt="Visual Studio Code"
-                draggable={false}
-                className="absolute left-40 -top-10 w-12 rounded-xl md:w-14"
-                style={{ x: items.vscode.x, y: items.vscode.y }}
+              <BrandIconBadge
+                name="MongoDB"
+                slug="mongodb"
+                color="47A248"
+                angle={131}
+                shouldReduceMotion={shouldReduceMotion}
+              />
+
+              <BrandIconBadge
+                name="Visual Studio Code"
+                src="/icons8-vs-code-48.png"
+                angle={164}
+                shouldReduceMotion={shouldReduceMotion}
               />
 
               <BrandIconBadge
                 name="PostgreSQL"
                 slug="postgresql"
                 color="336791"
-                className="-left-32 bottom-36"
-                size="xl"
-                parallax={items.postgres}
+                angle={196}
+                shouldReduceMotion={shouldReduceMotion}
               />
 
               <BrandIconBadge
                 name="Redis"
                 slug="redis"
                 color="DC382D"
-                className="right-48 -top-14"
-                size="lg"
-                parallax={items.redis}
+                angle={229}
+                shouldReduceMotion={shouldReduceMotion}
               />
 
               <BrandIconBadge
@@ -447,28 +415,26 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
                 slug="amazonwebservices"
                 color="232F3E"
                 src="/aws.svg"
-                className="-bottom-16 right-12"
-                size="xl"
-                parallax={items.aws}
+                angle={262}
+                shouldReduceMotion={shouldReduceMotion}
               />
 
               <BrandIconBadge
                 name="Cloudflare"
                 slug="cloudflare"
                 color="F38020"
-                className="-right-20 -top-10"
-                size="lg"
-                parallax={items.cloudflare}
+                angle={295}
+                shouldReduceMotion={shouldReduceMotion}
               />
 
               <BrandIconBadge
                 name="Solidity"
                 slug="solidity"
                 color="363636"
-                className="bottom-16 left-[22rem]"
-                size="md"
-                parallax={items.solidity}
+                angle={327}
+                shouldReduceMotion={shouldReduceMotion}
               />
+              </div>
             </motion.div>
           )}
 
@@ -480,7 +446,7 @@ const Home = ({ isScreenSupported }: ScreenSupportProps) => {
             viewport={revealViewport}
             className="mx-auto w-full max-w-md rounded-3xl border border-zinc-200 bg-white/85 p-6 text-black shadow-[0_24px_70px_rgba(15,23,42,0.12)] backdrop-blur dark:border-zinc-800 dark:bg-black/65 dark:text-white sm:p-8 lg:mx-0 lg:translate-x-44 xl:translate-x-64"
           >
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-zinc-500 dark:text-zinc-400">Bio</p>
+            <p className="font-manrope text-sm font-extrabold uppercase tracking-[0.22em] text-[#16C47F]">Bio</p>
             <div className="mt-5 grid gap-3 text-sm font-semibold uppercase tracking-wide text-zinc-700 dark:text-zinc-300 sm:grid-cols-2">
               <span className="rounded-2xl bg-zinc-100 px-4 py-3 text-center dark:bg-zinc-900">25 year old</span>
               <span className="rounded-2xl bg-zinc-100 px-4 py-3 text-center dark:bg-zinc-900">Post-graduated</span>

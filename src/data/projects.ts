@@ -40,7 +40,6 @@ export const projects: readonly Project[] = [
       'User and project management with JWT authentication and secure API key handling.',
       'Easy-to-integrate JavaScript SDK for tracking events like page views and clicks.',
       'Admin panel for managing users, projects, and detailed event data.',
-      'Responsive UI with comprehensive analytics across all screen sizes.',
     ],
     websiteUrl: 'https://viewcount-frontend.onrender.com/',
     image: {
@@ -67,7 +66,6 @@ export const projects: readonly Project[] = [
       'Like/match system with real-time notifications.',
       'Chat feature using Socket.io for live conversations.',
       'Privacy controls and account-level preferences for a safer user experience.',
-      'Optimized for tablet and desktop experiences above 720px viewport width.',
     ],
     websiteUrl: 'https://savana-datingapp-frontend.onrender.com/',
     image: {
@@ -119,7 +117,6 @@ export const projects: readonly Project[] = [
       'Cart and secure checkout with order confirmation.',
       'Admin panel for product, category, and order management.',
       'Payment options integrated with Stripe and Google Pay API.',
-      'Complete responsive for all screens.',
     ],
     websiteUrl: 'https://e-commerce-full-stack-frontend-xdzn.onrender.com',
     image: {

@@ -166,6 +166,8 @@ export function ProjectSection({ project, index }: ProjectSectionProps) {
             <img
               src={assetPath(project.image.src)}
               alt={project.image.alt}
+              loading="lazy"
+              decoding="async"
               className="h-full w-full max-w-full object-contain transition-transform duration-500 group-hover:scale-[1.025]"
             />
           </div>

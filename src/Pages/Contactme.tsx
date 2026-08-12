@@ -47,7 +47,7 @@ const Contactme = () => {
   return (
     <section
       id="contact"
-      className="relative w-full px-6 py-32 text-black dark:text-white sm:px-10 sm:py-40 lg:px-16 lg:py-48"
+      className="relative w-full scroll-mt-20 px-6 py-32 text-black dark:text-white sm:px-10 sm:py-40 lg:px-16 lg:py-48"
     >
       <div className="mx-auto grid w-full max-w-[90rem] gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(520px,1fr)] lg:items-center lg:gap-20">
         <motion.div
@@ -94,7 +94,7 @@ const Contactme = () => {
               viewport={revealViewport}
               className="rounded-3xl border border-zinc-200 bg-white/80 p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/70"
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#E9A5F1]/30 text-zinc-900 dark:text-white">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#16C47F]/12 text-[#16C47F]">
                 <MapPin className="h-5 w-5" />
               </div>
               <p className="mt-5 text-sm font-bold uppercase tracking-[0.18em] text-zinc-500 dark:text-zinc-400">
@@ -128,12 +128,14 @@ const Contactme = () => {
                   src={assetPath('/download-removebg-preview.png')}
                   alt="Rohan"
                   draggable={false}
+                  loading="lazy"
+                  decoding="async"
                   className="absolute inset-x-0 bottom-0 mx-auto max-h-[23rem] object-contain"
                 />
               </div>
 
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.22em] text-zinc-500 dark:text-zinc-400">
+                <p className="font-manrope text-sm font-extrabold uppercase tracking-[0.22em] text-[#16C47F]">
                   Connect with me
                 </p>
                 <div className="mt-5 flex flex-col gap-3">

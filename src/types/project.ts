@@ -5,7 +5,7 @@ export type Project = {
   stack: readonly string[];
   highlights: readonly string[];
   description: string;
-  features: readonly string[];
+  features: readonly [string, string, string, string];
   websiteUrl: string;
   image: {
     src: string;

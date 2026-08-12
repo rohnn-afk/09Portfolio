@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import ThemeToggle from '../assets/ThemeToggle';
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { Link } from "react-scroll";
 import { fadeUp, revealTransition, revealViewport } from '../lib/animations';
 
@@ -11,6 +11,7 @@ type NavbarProps = {
 const Navbar = ({ isScreenSupported }: NavbarProps) => {
   
   const [scrollY, setScrollY] = useState(0);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,8 +26,8 @@ const Navbar = ({ isScreenSupported }: NavbarProps) => {
   const isScrolled = scrollY > 100;
   const compactNavPosition = isScreenSupported ? 'top-3 left-10' : 'top-0 left-0';
   const navTransition = 'transition-all duration-700 ease-in-out';
-  const welcomeScale = Math.max(0.72, 1 - scrollY / 900);
-  const welcomeTranslateY = Math.max(-48, -scrollY / 8);
+  const welcomeScale = shouldReduceMotion ? 1 : Math.max(0.72, 1 - scrollY / 900);
+  const welcomeTranslateY = shouldReduceMotion ? 0 : Math.max(-48, -scrollY / 8);
   const scrollOffset = isScreenSupported ? -84 : -56;
   
   return (
@@ -72,7 +73,7 @@ const Navbar = ({ isScreenSupported }: NavbarProps) => {
       </section>
 
       <nav
-        className={`fixed z-[900] flex h-12 w-[calc(100%-2rem)] max-w-xl items-center justify-between bg-white px-4 shadow-lg dark:bg-zinc-900 sm:px-8 ${compactNavPosition} ${
+        className={`fixed z-[900] flex h-12 w-[calc(100%-2rem)] max-w-2xl items-center justify-between bg-white px-4 shadow-lg dark:bg-zinc-900 sm:px-8 ${compactNavPosition} ${
           isScrolled ? 'translate-y-0 opacity-100' : '-translate-y-6 pointer-events-none opacity-0'
         } ${isScreenSupported ? 'rounded-2xl' : ''} ${navTransition}`}
         aria-label="Primary navigation"
@@ -86,8 +87,9 @@ const Navbar = ({ isScreenSupported }: NavbarProps) => {
         >
           PORTFOLIO
         </Link>
-        <div className="flex items-center justify-center gap-4 text-sm font-medium sm:gap-8 sm:text-lg">
+        <div className="flex items-center justify-center gap-2 text-xs font-medium sm:gap-6 sm:text-base">
           <Link to="about" smooth duration={500} offset={scrollOffset} className="rounded-md hover:cursor-pointer hover:text-gray-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#16C47F]">About</Link>
+          <Link to="experience" smooth duration={500} offset={scrollOffset} className="rounded-md hover:cursor-pointer hover:text-gray-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#16C47F]">Experience</Link>
           <Link to="project" smooth duration={500} offset={scrollOffset} className="rounded-md hover:cursor-pointer hover:text-gray-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#16C47F]">Projects</Link>
           <Link to="contact" smooth duration={500} offset={scrollOffset} className="rounded-md hover:cursor-pointer hover:text-gray-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#16C47F]">Contact</Link>
           <ThemeToggle />
