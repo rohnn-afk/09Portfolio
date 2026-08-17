@@ -16,7 +16,9 @@ test('keeps case-study navigation fixed and exposes both primary actions', () =>
 
   expect(navigation).toHaveClass('fixed', 'inset-x-0', 'top-0');
   expect(backLink).toHaveAttribute('href', '/');
+  expect(backLink).toHaveClass('bg-white/90', 'dark:bg-zinc-900/[0.88]');
   expect(companyLink).toHaveAttribute('href', 'https://ezyr.io/');
   expect(companyLink).toHaveAttribute('target', '_blank');
   expect(companyLink).toHaveAttribute('rel', 'noopener noreferrer');
+  expect(companyLink).toHaveClass('bg-[#16C47F]', 'dark:bg-[#22cf8a]');
 });

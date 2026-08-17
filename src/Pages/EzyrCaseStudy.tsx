@@ -89,6 +89,15 @@ const ownership = [
   'Diagnosed failures across the complete canvas-to-code lifecycle and evolved the architecture as new capabilities were introduced.',
 ] as const;
 
+const floatingActionBase =
+  'group pointer-events-auto inline-flex min-h-11 items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-bold backdrop-blur-xl transition-[border-color,background-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#16C47F] focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black';
+
+const backActionStyles =
+  'border-zinc-200/90 bg-white/90 text-zinc-900 shadow-[0_10px_35px_rgba(15,23,42,0.12)] hover:border-[#16C47F]/70 hover:bg-white hover:shadow-[0_14px_40px_rgba(15,23,42,0.16)] dark:border-white/[0.16] dark:bg-zinc-900/[0.88] dark:text-zinc-100 dark:shadow-[0_12px_38px_rgba(0,0,0,0.42)] dark:hover:border-[#16C47F]/70 dark:hover:bg-zinc-800/[0.94] dark:hover:shadow-[0_16px_44px_rgba(0,0,0,0.5)]';
+
+const visitActionStyles =
+  'border-[#16C47F] bg-[#16C47F] text-zinc-950 shadow-[0_10px_34px_rgba(22,196,127,0.24)] hover:border-[#20d991] hover:bg-[#20d991] hover:shadow-[0_15px_42px_rgba(22,196,127,0.32)] dark:border-[#35d99a] dark:bg-[#22cf8a] dark:text-zinc-950 dark:shadow-[0_12px_38px_rgba(22,196,127,0.22)] dark:hover:border-[#53e3aa] dark:hover:bg-[#46dfa4] dark:hover:shadow-[0_16px_46px_rgba(22,196,127,0.3)]';
+
 const EzyrCaseStudy = () => {
   useEffect(() => {
     const previousTitle = document.title;
@@ -110,7 +119,7 @@ const EzyrCaseStudy = () => {
       >
         <Link
           to="/"
-          className="group pointer-events-auto inline-flex min-h-11 items-center gap-2 rounded-full border border-zinc-200/90 bg-white/90 px-4 py-2.5 text-sm font-bold text-zinc-900 shadow-[0_10px_35px_rgba(15,23,42,0.12)] backdrop-blur-xl transition-[border-color,background-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-[#16C47F]/70 hover:bg-white hover:shadow-[0_14px_40px_rgba(15,23,42,0.16)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#16C47F] focus-visible:ring-offset-2 dark:border-white/15 dark:bg-zinc-950/88 dark:text-white dark:hover:border-[#16C47F]/70 dark:hover:bg-zinc-950 dark:focus-visible:ring-offset-black"
+          className={`${floatingActionBase} ${backActionStyles}`}
         >
           <ArrowLeft className="transition-transform duration-300 group-hover:-translate-x-0.5" size={17} aria-hidden="true" />
           <span className="max-[359px]:hidden">Back to portfolio</span>
@@ -120,7 +129,7 @@ const EzyrCaseStudy = () => {
           href={ezyrExperience.companyUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="group pointer-events-auto inline-flex min-h-11 items-center gap-2 rounded-full border border-zinc-200/90 bg-white/90 px-4 py-2.5 text-sm font-bold text-zinc-900 shadow-[0_10px_35px_rgba(15,23,42,0.12)] backdrop-blur-xl transition-[border-color,background-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-[#16C47F]/70 hover:bg-white hover:shadow-[0_14px_40px_rgba(15,23,42,0.16)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#16C47F] focus-visible:ring-offset-2 dark:border-white/15 dark:bg-zinc-950/88 dark:text-white dark:hover:border-[#16C47F]/70 dark:hover:bg-zinc-950 dark:focus-visible:ring-offset-black"
+          className={`${floatingActionBase} ${visitActionStyles}`}
         >
           Visit Ezyr
           <ArrowUpRight className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" size={17} aria-hidden="true" />
