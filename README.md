@@ -10,7 +10,6 @@ Personal portfolio built with React, TypeScript, Vite, Tailwind CSS, Framer Moti
 
 ```bash
 bun install
-bun run audit
 bun run dev
 bun run typecheck
 bun run test

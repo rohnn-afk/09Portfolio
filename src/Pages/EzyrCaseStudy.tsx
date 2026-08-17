@@ -101,29 +101,33 @@ const EzyrCaseStudy = () => {
 
   return (
     <main className="relative z-10 w-full text-black dark:text-white">
-      <nav
-        className="mx-auto flex w-full max-w-[92rem] items-center justify-between px-6 py-6 sm:px-10 lg:px-16"
+      <motion.nav
+        initial={{ opacity: 0, y: -16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: 'easeOut' }}
+        className="pointer-events-none fixed inset-x-0 top-0 z-[100] mx-auto flex w-full max-w-[100rem] items-center justify-between gap-3 px-4 pb-3 pt-[calc(env(safe-area-inset-top)+1rem)] sm:px-10 sm:pt-[calc(env(safe-area-inset-top)+1.5rem)] lg:px-16"
         aria-label="Case study navigation"
       >
         <Link
           to="/"
-          className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white/80 px-4 py-2.5 text-sm font-bold backdrop-blur transition hover:border-[#16C47F] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#16C47F] dark:border-zinc-800 dark:bg-zinc-950/80"
+          className="group pointer-events-auto inline-flex min-h-11 items-center gap-2 rounded-full border border-zinc-200/90 bg-white/90 px-4 py-2.5 text-sm font-bold text-zinc-900 shadow-[0_10px_35px_rgba(15,23,42,0.12)] backdrop-blur-xl transition-[border-color,background-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-[#16C47F]/70 hover:bg-white hover:shadow-[0_14px_40px_rgba(15,23,42,0.16)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#16C47F] focus-visible:ring-offset-2 dark:border-white/15 dark:bg-zinc-950/88 dark:text-white dark:hover:border-[#16C47F]/70 dark:hover:bg-zinc-950 dark:focus-visible:ring-offset-black"
         >
-          <ArrowLeft size={17} aria-hidden="true" />
-          Back to portfolio
+          <ArrowLeft className="transition-transform duration-300 group-hover:-translate-x-0.5" size={17} aria-hidden="true" />
+          <span className="max-[359px]:hidden">Back to portfolio</span>
+          <span className="hidden max-[359px]:inline">Back</span>
         </Link>
         <a
           href={ezyrExperience.companyUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-md text-sm font-bold text-zinc-600 hover:text-[#16C47F] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#16C47F] dark:text-zinc-300"
+          className="group pointer-events-auto inline-flex min-h-11 items-center gap-2 rounded-full border border-zinc-200/90 bg-white/90 px-4 py-2.5 text-sm font-bold text-zinc-900 shadow-[0_10px_35px_rgba(15,23,42,0.12)] backdrop-blur-xl transition-[border-color,background-color,box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:border-[#16C47F]/70 hover:bg-white hover:shadow-[0_14px_40px_rgba(15,23,42,0.16)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#16C47F] focus-visible:ring-offset-2 dark:border-white/15 dark:bg-zinc-950/88 dark:text-white dark:hover:border-[#16C47F]/70 dark:hover:bg-zinc-950 dark:focus-visible:ring-offset-black"
         >
           Visit Ezyr
-          <ArrowUpRight size={17} aria-hidden="true" />
+          <ArrowUpRight className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" size={17} aria-hidden="true" />
         </a>
-      </nav>
+      </motion.nav>
 
-      <section className="px-6 pb-24 pt-16 sm:px-10 sm:pb-32 sm:pt-24 lg:px-16">
+      <section className="px-6 pb-24 pt-40 sm:px-10 sm:pb-32 sm:pt-48 lg:px-16">
         <motion.div
           variants={fadeUp}
           initial="hidden"
