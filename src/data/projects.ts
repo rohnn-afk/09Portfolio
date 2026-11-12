@@ -29,9 +29,12 @@ export const projects: readonly Project[] = [
   },
   {
     title: 'ViewCount SaaS',
+    repositoryUrl: 'https://github.com/rohnn-afk/ViewCount',
+    opportunity: 'Give website owners a way to capture visitor activity and inspect traffic and engagement in one dashboard.',
+    contribution: 'Built the embeddable JavaScript SDK, authenticated project and ingestion APIs, time-windowed aggregations, and reporting dashboard. The SDK uses persistent visitor identification and scoped ingestion keys.',
     category: 'Analytics SaaS',
     role: 'Full-stack Developer',
-    stack: ['React', 'Node.js', 'JWT', 'SDK'],
+    stack: ['React', 'Express', 'MongoDB', 'Zustand', 'Recharts'],
     highlights: ['Event tracking', 'API keys', 'Admin dashboard'],
     description:
       'An open-source website analytics platform with realtime event tracking, API-key based integration, customizable events, and dashboard views for product owners.',
@@ -55,6 +58,9 @@ export const projects: readonly Project[] = [
   },
   {
     title: 'Savana Dating Web App',
+    repositoryUrl: 'https://github.com/rohnn-afk/Savana_DatingApp',
+    opportunity: 'Connect profile discovery and mutual matching with private, realtime conversations.',
+    contribution: 'Modeled accounts, profiles, matches, messages and notifications. Implemented JWT authentication, bcrypt password hashing, Cloudinary media storage, and targeted Socket.IO events for likes, matches and messages.',
     category: 'Realtime Social App',
     role: 'Full-stack Developer',
     stack: ['MERN', 'Socket.io', 'JWT', 'Cloudinary'],

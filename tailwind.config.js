@@ -4,7 +4,8 @@ export default {
   darkMode: "class",
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/App.tsx",
+    "./src/components/Editorial.tsx",
   ],
   theme: {
     extend: {

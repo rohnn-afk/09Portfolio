@@ -4,11 +4,11 @@ export const ezyrExperience: Experience = {
   company: 'Ezyr',
   companyUrl: 'https://ezyr.io/',
   location: 'Remote',
-  period: 'May 2025 – Jul 2026',
+  period: 'May 2025 – Aug 2026',
   roles: [
     {
       title: 'Technical Lead',
-      period: 'Oct 2025 – Jul 2026',
+      period: 'Oct 2025 – Aug 2026',
       summary:
         'Promoted from Frontend Developer Intern to Technical Lead, taking end-to-end technical ownership of Ezyr’s no-code application platform.',
       achievements: [

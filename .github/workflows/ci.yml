@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -15,6 +16,9 @@ jobs:
   quality:
     name: Quality Checks
     runs-on: ubuntu-latest
+    env:
+      PAGES_BASE: /09Portfolio/
+      SITE_ORIGIN: https://rohnn-afk.github.io
 
     steps:
       - name: Checkout repository
@@ -45,3 +49,27 @@ jobs:
 
       - name: Smoke test production preview
         run: bun run smoke
+
+      - name: Upload Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: quality
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -7,6 +7,9 @@ export type Project = {
   description: string;
   features: readonly [string, string, string, string];
   websiteUrl: string;
+  repositoryUrl?: string;
+  opportunity?: string;
+  contribution?: string;
   image: {
     src: string;
     alt: string;
