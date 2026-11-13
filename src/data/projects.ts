@@ -3,23 +3,24 @@ import type { Project } from '../types/project';
 export const projects: readonly Project[] = [
   {
     title: '09-Fitness.AI',
-    category: 'AI Fitness Platform',
+    category: 'Fitness planning prototype',
     role: 'Full-stack Developer',
     stack: ['Next.js', 'Clerk', 'Gemini', 'Vapi'],
-    highlights: ['AI plans', 'Voice chatbot', 'Personalized UX'],
+    highlights: ['Voice-led onboarding', 'Plan generation', 'Saved plans'],
     description:
-      'Built a modern fitness web app using Next.js, integrating Clerk for authentication, Gemini for AI personalization, and Vapi for chatbot interactions. The AI chatbot collects user fitness goals, experience level, and dietary preferences to generate fully personalized workout plans and diet charts, creating an engaging, intelligent fitness companion experience.',
+      'A voice-guided fitness planning prototype that gathers goals and preferences, generates workout and meal plans, and lets signed-in users save and revisit them.',
+    opportunity:
+      'Explore a more conversational path from a person’s goals to a structured workout and meal plan.',
+    contribution:
+      'Built the Next.js product flow connecting Clerk authentication, Vapi voice conversation, Gemini plan generation, and Convex profile and plan storage.',
     features: [
-      'Smart chatbot generates custom workout routines and diet charts tailored to user input.',
-      'User accounts managed securely with Clerk for a seamless and protected login experience.',
-      'Integrated Vapi for a smooth, human-like conversation flow with the fitness AI.',
-      'Built with Next.js for fast, scalable frontend and backend, offering a sleek and responsive user interface.',
+      'Voice conversation collects fitness goals, experience, and dietary preferences.',
+      'Gemini generates structured workout and meal-plan content.',
+      'Convex stores profile data and saved plans for signed-in users.',
+      'Users can switch between saved plans and mark an active plan.',
     ],
     websiteUrl: 'https://09-fitness-ai.vercel.app/',
-    image: {
-      src: '/fitness.png',
-      alt: '09-Fitness.AI application screenshot',
-    },
+    visualSteps: ['Voice intake', 'Plan generation', 'Saved plans'],
     styles: {
       section: 'bg-[#00FF9C]',
       content: 'text-[#000000]',
@@ -28,27 +29,23 @@ export const projects: readonly Project[] = [
     },
   },
   {
-    title: 'ViewCount SaaS',
+    title: 'ViewCount',
     repositoryUrl: 'https://github.com/rohnn-afk/ViewCount',
     opportunity: 'Give website owners a way to capture visitor activity and inspect traffic and engagement in one dashboard.',
-    contribution: 'Built the embeddable JavaScript SDK, authenticated project and ingestion APIs, time-windowed aggregations, and reporting dashboard. The SDK uses persistent visitor identification and scoped ingestion keys.',
-    category: 'Analytics SaaS',
+    contribution: 'Built the embeddable JavaScript SDK, authenticated project and ingestion APIs, and reporting dashboard. The SDK includes persistent visitor identification and project-scoped ingestion keys.',
+    category: 'Analytics prototype',
     role: 'Full-stack Developer',
     stack: ['React', 'Express', 'MongoDB', 'Zustand', 'Recharts'],
     highlights: ['Event tracking', 'API keys', 'Admin dashboard'],
     description:
-      'An open-source website analytics platform with realtime event tracking, API-key based integration, customizable events, and dashboard views for product owners.',
+      'A website event analytics prototype with an embeddable JavaScript SDK, project-scoped ingestion keys, and a dashboard for inspecting captured activity.',
     features: [
-      'Website analytics with customizable event tracking and clear visual reporting.',
-      'User and project management with JWT authentication and secure API key handling.',
-      'Easy-to-integrate JavaScript SDK for tracking events like page views and clicks.',
-      'Admin panel for managing users, projects, and detailed event data.',
+      'Browser SDK captures page, click, and scroll events.',
+      'Express and MongoDB APIs ingest events using project-scoped keys.',
+      'Authenticated dashboard supports project management and event exploration.',
     ],
     websiteUrl: 'https://viewcount-frontend.onrender.com/',
-    image: {
-      src: '/viewcount.png',
-      alt: 'Viewcount analytics dashboard screenshot',
-    },
+    visualSteps: ['Browser SDK', 'Scoped API', 'Event dashboard'],
     styles: {
       section: 'bg-[#FFDEDE]',
       content: 'text-black',
@@ -59,81 +56,27 @@ export const projects: readonly Project[] = [
   {
     title: 'Savana Dating Web App',
     repositoryUrl: 'https://github.com/rohnn-afk/Savana_DatingApp',
-    opportunity: 'Connect profile discovery and mutual matching with private, realtime conversations.',
+    opportunity: 'Connect profile discovery and mutual matching with realtime conversations.',
     contribution: 'Modeled accounts, profiles, matches, messages and notifications. Implemented JWT authentication, bcrypt password hashing, Cloudinary media storage, and targeted Socket.IO events for likes, matches and messages.',
     category: 'Realtime Social App',
     role: 'Full-stack Developer',
     stack: ['MERN', 'Socket.io', 'JWT', 'Cloudinary'],
-    highlights: ['Matching flow', 'Realtime chat', 'Privacy controls'],
+    highlights: ['Matching flow', 'Realtime chat', 'Profile settings'],
     description:
-      'A dating app with user profiles, preferences, matching, realtime chat, proximity search, and a polished responsive interface.',
+      'A social discovery prototype connecting profile preferences, mutual likes, match notifications, and realtime conversations.',
     features: [
       'Users sign up, upload images, and set preferences.',
       'Like/match system with real-time notifications.',
       'Chat feature using Socket.io for live conversations.',
-      'Privacy controls and account-level preferences for a safer user experience.',
+      'Profile preferences and account-level settings.',
     ],
     websiteUrl: 'https://savana-datingapp-frontend.onrender.com/',
-    image: {
-      src: '/Screenshot 2025-04-01 211144.png',
-      alt: 'Savana dating web app screenshot',
-    },
+    visualSteps: ['Profile discovery', 'Mutual match', 'Realtime chat'],
     styles: {
       section: 'bg-[#F16767]',
       content: 'text-[#FFF085]',
       accent: 'bg-[#532E07]',
       imagePanel: 'bg-[#FFF085]',
-    },
-  },
-  {
-    title: 'Chat Web App',
-    category: 'Realtime Messaging',
-    role: 'MERN Developer',
-    stack: ['MongoDB', 'Express', 'React', 'Socket.io'],
-    highlights: ['Live status', 'Private chats', 'Theme system'],
-    description: 'A real-time chat application built with MERN stack and Socket.io.',
-    features: [
-      'Real-time messaging between users with online/offline status.',
-      'Rooms or private chats for organized conversations.',
-      'Message delivery and seen statuses.',
-      'Includes 32 theme options for user personalization.',
-    ],
-    websiteUrl: 'https://chat-app-frontend-cehi.onrender.com/',
-    image: {
-      src: '/Screenshot 2025-04-05 200257.png',
-      alt: 'Chat web app screenshot',
-    },
-    styles: {
-      section: 'bg-[#7C4585]',
-      content: 'text-[#F8B55F]',
-      accent: 'bg-[#1b3e29]',
-      imagePanel: 'bg-[#B6FFA1]',
-    },
-  },
-  {
-    title: 'Forever Ecommerce',
-    category: 'Ecommerce Platform',
-    role: 'Full-stack Developer',
-    stack: ['MongoDB', 'Express', 'React', 'Stripe'],
-    highlights: ['Checkout flow', 'Admin panel', 'Responsive store'],
-    description:
-      'A complete online store built with MERN stack where users can buy products and admins can manage inventory.',
-    features: [
-      'Product listing, filtering, and detailed product views.',
-      'Cart and secure checkout with order confirmation.',
-      'Admin panel for product, category, and order management.',
-      'Payment options integrated with Stripe and Google Pay API.',
-    ],
-    websiteUrl: 'https://e-commerce-full-stack-frontend-xdzn.onrender.com',
-    image: {
-      src: '/Screenshot 2025-04-05 201621.png',
-      alt: 'Forever ecommerce application screenshot',
-    },
-    styles: {
-      section: 'bg-[#3dcebf]',
-      content: 'text-[#201E43]',
-      accent: 'bg-[#201E43]',
-      imagePanel: 'bg-[#66D2CE]',
     },
   },
 ];

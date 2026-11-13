@@ -8,8 +8,8 @@ test("provides a clear work entry, résumé, and direct contact", () => {
   expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
   expect(screen.getByRole("main")).toHaveAttribute("id", "main");
   expect(
-    screen.getByRole("link", { name: /explore my work/i }),
-  ).toHaveAttribute("href", "#work");
+    screen.getByRole("link", { name: /explore my experience/i }),
+  ).toHaveAttribute("href", "#experience");
   expect(screen.getByRole("link", { name: /email me/i })).toHaveAttribute(
     "href",
     "mailto:rohansharmadutt876@gmail.com",
@@ -37,5 +37,5 @@ test("case study preserves disclosure and engineering evidence", () => {
   expect(
     screen.getByRole("heading", { name: "Conceptual disclosure" }),
   ).toBeInTheDocument();
-  expect(screen.getByText(/230 passing automated tests/)).toBeInTheDocument();
+  expect(screen.getByText(/snapshot counts out until their dates and scope/)).toBeInTheDocument();
 });

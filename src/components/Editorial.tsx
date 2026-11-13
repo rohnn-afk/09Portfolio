@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { projects } from "../data/projects";
+import { freelanceProjects } from "../data/freelance";
 import { ezyrExperience } from "../data/experience";
 import { engineStages, challenges, ownership } from "../data/ezyrCase";
 import { assetPath } from "../lib/assetPath";
@@ -42,6 +43,7 @@ function Header() {
           rohan sharma<span className="wordmark-dot">.</span>
         </a>
         <nav aria-label="Primary navigation">
+          <a href={`${home}#experience`}>Experience</a>
           <a href={`${home}#work`}>Work</a>
           <a href={`${home}#about`}>About</a>
           <External href={assetPath("/Rohan-Sharma-Resume.pdf")}>
@@ -116,7 +118,7 @@ function Contact() {
   return (
     <section id="contact" className="contact section">
       <div className="container">
-        <Label>04 / Start a conversation</Label>
+        <Label>05 / Contact</Label>
         <div className="contact-grid">
           <h2>
             Something worth
@@ -151,9 +153,9 @@ function Contact() {
   );
 }
 const summaries: Record<string, string> = {
-  "ViewCount SaaS": "A clearer view of what happens on the web.",
-  "09-Fitness.AI": "Personal fitness plans, through conversation.",
-  "Savana Dating Web App": "From a first connection to a live conversation.",
+  ViewCount: "A website event analytics prototype, from SDK to dashboard.",
+  "09-Fitness.AI": "A voice-guided path from fitness goals to a saved plan.",
+  "Savana Dating Web App": "Profile discovery, mutual matches, and realtime chat.",
 };
 function ProjectPreview({
   project,
@@ -169,20 +171,24 @@ function ProjectPreview({
         href={project.websiteUrl}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`Visit ${project.title}`}
+        aria-label={`Open the ${project.title} live demo in a new tab`}
       >
-        <img
-          src={assetPath(
-            `/${["viewcount", "fitness", "savana"][index]}-1280.webp`,
-          )}
-          srcSet={`${assetPath(`/${["viewcount", "fitness", "savana"][index]}-640.webp`)} 640w, ${assetPath(`/${["viewcount", "fitness", "savana"][index]}-1280.webp`)} 1280w`}
-          sizes="(min-width: 1440px) 600px, (min-width: 640px) 45vw, 85vw"
-          alt={project.image.alt}
-          loading="lazy"
-          decoding="async"
-          width="1600"
-          height="1000"
-        />
+        <div
+          className="project-visual"
+          role="img"
+          aria-label={`Conceptual product flow: ${project.visualSteps.join(", then ")}`}
+        >
+          <span className="project-visual-kicker">Product flow / conceptual</span>
+          <ol>
+            {project.visualSteps.map((step, stepIndex) => (
+              <li key={step}>
+                <span>0{stepIndex + 1}</span>
+                <strong>{step}</strong>
+              </li>
+            ))}
+          </ol>
+          <span className="project-visual-caption">A closer look at the system</span>
+        </div>
         <span className="image-link" aria-hidden="true">
           ↗
         </span>
@@ -200,6 +206,12 @@ function ProjectPreview({
         <p className="project-summary">
           {summaries[project.title] || project.description}
         </p>
+        {project.title === "ViewCount" && (
+          <p className="project-state">
+            Prototype — visitor and view-count definitions need correction before
+            dashboard totals can be presented as validated analytics.
+          </p>
+        )}
         <ul className="tags" aria-label="Technologies">
           {project.stack.map((item) => (
             <li key={item}>{item}</li>
@@ -210,23 +222,16 @@ function ProjectPreview({
             Inside the project <span aria-hidden="true">+</span>
           </summary>
           <div className="project-detail">
-            <h4>Product & contribution</h4>
+            <h4>The opportunity</h4>
             <p>{project.opportunity || project.description}</p>
-            {project.contribution && <p>{project.contribution}</p>}
-            <h4>Implementation</h4>
+            <h4>My contribution</h4>
+            <p>{project.contribution || project.description}</p>
+            <h4>What the product does</h4>
             <ul>
               {project.features.map((feature) => (
                 <li key={feature}>{feature}</li>
               ))}
             </ul>
-            <p className="content-gap">
-              [NEEDS CONTENT: {project.title} — key tradeoffs and evidenced
-              outcome
-              {project.repositoryUrl
-                ? ""
-                : ", original contribution and repository URL"}
-              .]
-            </p>
             {project.repositoryUrl && (
               <External className="text-link" href={project.repositoryUrl}>
                 View source on GitHub
@@ -251,23 +256,23 @@ export function Portfolio() {
           </div>
           <div className="hero-grid">
             <h1>
-              Thoughtful interfaces.
+              I build products
               <br />
-              <em>Serious engineering.</em>
+              <em>from interface to infrastructure.</em>
             </h1>
             <div className="hero-aside">
               <span className="small-rule" />
               <p>
-                I build full-stack products for teams turning complex ideas into
-                working software.
+                Software engineer and product engineer for teams turning
+                complex ideas into working software.
               </p>
               <p className="hero-proof">
-                Previously Technical Lead at Ezyr — from visual canvas to
-                generated applications and cloud deployment.
+                At Ezyr, I grew from frontend intern to Technical Lead, leading
+                engineering across the application platform.
               </p>
               <div className="actions">
-                <a className="button" href="#work">
-                  Explore my work <span aria-hidden="true">↓</span>
+                <a className="button" href="#experience">
+                  Explore my experience <span aria-hidden="true">↓</span>
                 </a>
                 <External className="text-link" href={github}>
                   GitHub
@@ -280,35 +285,47 @@ export function Portfolio() {
           </div>
           <div className="hero-bottom">
             <span>Interfaces. Systems. Everything in between.</span>
-            <a href="#work">Selected work below ↓</a>
+            <a href="#experience">Experience below ↓</a>
           </div>
         </section>
-        <section id="work" className="container section work-section">
+        <section className="container section work-section">
           <div className="section-heading">
-            <Label>01 / Selected work</Label>
-            <p>A closer look at the things I build.</p>
+            <Label>01 / Professional experience</Label>
+            <h2>From the first canvas to technical leadership.</h2>
           </div>
-          <article className="featured">
+          <article id="experience" className="featured">
             <div className="featured-copy">
               <div className="feature-meta">
-                <span>Featured engineering case study</span>
-                <span>2025–2026</span>
+                <span>Technical leadership · Ezyr</span>
+                <span>May 2025 — Aug 2026</span>
               </div>
-              <h2>
+              <h3>
                 From canvas
                 <br />
                 to <em>running code.</em>
-              </h2>
+              </h3>
               <p>
-                At Ezyr, I built the Neuron Engine: the system that turns visual
-                application definitions into complete Next.js projects.
+                I led engineering across Ezyr’s no-code application platform,
+                from its visual editor to generated applications, AI systems,
+                and cloud deployment.
               </p>
               <div className="feature-role">
-                Ezyr / Technical Lead
-                <br />
-                <span>
-                  Application generation · AI systems · Cloud infrastructure
-                </span>
+                <div className="role-journey" aria-label="Career progression at Ezyr">
+                  {ezyrExperience.roles.slice().reverse().map((role, index) => (
+                    <div className="role-stop" key={role.title}>
+                      <span className="role-stop-index">0{index + 1}</span>
+                      <div>
+                        <strong>{role.title}</strong>
+                        <span>{role.period}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <ul className="feature-proof-list" aria-label="Selected Ezyr contributions">
+                  {ezyrExperience.roles[0].achievements.slice(0, 3).map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
               </div>
               <a className="button light" href={caseUrl}>
                 Explore the case study <Arrow />
@@ -325,6 +342,12 @@ export function Portfolio() {
               </span>
             </a>
           </article>
+        </section>
+        <section id="work" className="container section work-section personal-work">
+          <div className="section-heading">
+            <Label>02 / Personal projects</Label>
+            <h2>Product thinking, applied across different systems.</h2>
+          </div>
           <div className="project-grid">
             {selection.map((project, index) => (
               <ProjectPreview
@@ -334,21 +357,31 @@ export function Portfolio() {
               />
             ))}
           </div>
-          <div className="more-work">
-            <Label>Also built</Label>
-            {[projects[3], projects[4]].map((project) => (
-              <div key={project.title}>
-                <External href={project.websiteUrl}>{project.title}</External>
-                <p>{project.category}</p>
-                <span>{project.stack.join(" / ")}</span>
-              </div>
+          <div className="more-work freelance-work">
+            <div className="freelance-heading">
+              <Label>03 / Freelance work</Label>
+              <h2>Selected client work</h2>
+            </div>
+            {freelanceProjects.map((project, index) => (
+              <article className="freelance-row" key={project.name}>
+                <span className="freelance-index">0{index + 1}</span>
+                <div className="freelance-copy">
+                  <h3>{project.name}</h3>
+                  <p>{project.description}</p>
+                  <small>{project.note}</small>
+                </div>
+                <div className="freelance-links">
+                  {project.websiteUrl && <External href={project.websiteUrl}>View site</External>}
+                  <External href={project.repositoryUrl}>Source</External>
+                </div>
+              </article>
             ))}
           </div>
         </section>
         <section id="about" className="about section">
           <div className="container about-grid">
             <div>
-              <Label>02 / Behind the work</Label>
+              <Label>04 / About</Label>
               <h2>
                 A builder,
                 <br />
@@ -364,9 +397,9 @@ export function Portfolio() {
                 it running.
               </p>
               <p>
-                At Ezyr, that meant growing from building the visual editor as
-                an intern to owning application generation, AI systems, and
-                production delivery as Technical Lead.
+                At Ezyr, I grew from building the visual editor as an intern to
+                leading engineering across application generation, AI systems,
+                and production delivery.
               </p>
               <External
                 className="text-link"
@@ -405,19 +438,6 @@ export function Portfolio() {
             </div>
           </div>
           <div className="container experience">
-            <Label>03 / Experience</Label>
-            {ezyrExperience.roles.map((role) => (
-              <article key={role.title}>
-                <p className="experience-date">
-                  {role.period}
-                  <span>Ezyr · Remote</span>
-                </p>
-                <div>
-                  <h3>{role.title}</h3>
-                  <p>{role.summary}</p>
-                </div>
-              </article>
-            ))}
             <div className="education">
               <Label>Education</Label>
               <p>
@@ -550,10 +570,10 @@ export function CaseStudy() {
           >
             <p>
               The Neuron Engine produced complete Next.js projects from
-              structured application definitions. The capability library spanned
-              21 application templates and 268 indexed reusable blocks, with 230
-              passing automated tests across the wider orchestration and
-              generation platform.
+              structured application definitions, with reusable capabilities
+              and automated checks supporting the generation flow. I have left
+              snapshot counts out until their dates and scope can be verified
+              against the same release.
             </p>
             <aside className="disclosure">
               <h3>Conceptual disclosure</h3>
@@ -564,7 +584,8 @@ export function CaseStudy() {
               </p>
             </aside>
             <p className="content-gap">
-              [NEEDS CONTENT: approved product screenshots and lessons learned.]
+              Product interface imagery is omitted here; this case study keeps
+              the platform details at a conceptual, public-safe level.
             </p>
           </CaseSection>
         </div>

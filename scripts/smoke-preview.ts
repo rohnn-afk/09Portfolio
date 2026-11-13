@@ -19,7 +19,7 @@ try {
     const response = await fetch(`http://${host}:${address.port}${path}`);
     const html = await response.text();
 
-    if (!response.ok || !html.includes('<main') || !html.includes(route ? 'The Neuron' : 'Thoughtful interfaces.')) {
+    if (!response.ok || !html.includes('<main') || !html.includes(route ? 'The Neuron' : 'I build products')) {
       throw new Error(`Preview smoke test failed for ${path} (${response.status}).`);
     }
 

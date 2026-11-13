@@ -25,11 +25,20 @@ try {
       '<div id="root"></div>',
       `<div id="root">${markup}</div>`,
     );
-    if (route === "experience/ezyr/")
+    if (route === "experience/ezyr/") {
       html = html.replaceAll(
-        "Rohan Sharma — Full-stack Product Engineer",
+        "Rohan Sharma — Product Engineer & Technical Lead",
         "The Neuron Engine — Ezyr case study | Rohan Sharma",
       );
+      html = html.replace(
+        "Rohan Sharma is a product engineer and technical lead who builds software from interface through AI systems, backend and deployment. Explore Ezyr experience and independent product work.",
+        "A technical case study on the Ezyr Neuron Engine: translating structured visual application definitions into runnable Next.js projects and a deployment handoff.",
+      );
+      html = html.replace(
+        "From frontend engineering to technical leadership at Ezyr, with selected personal products and freelance work.",
+        "How Rohan Sharma led engineering across Ezyr’s visual application platform, generation pipeline, AI runtime and deployment.",
+      );
+    }
     if (route === "404.html")
       html = html.replace(
         "</head>",

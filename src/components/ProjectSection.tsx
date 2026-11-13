@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Check } from 'lucide-react';
 import type { Project } from '../types/project';
 import { fadeUp, hoverIconTransition, revealTransition, revealViewport } from '../lib/animations';
-import { assetPath } from '../lib/assetPath';
 
 type ProjectSectionProps = {
   project: Project;
@@ -163,13 +162,21 @@ export function ProjectSection({ project, index }: ProjectSectionProps) {
             </span>
           </div>
           <div className="aspect-[16/10] overflow-hidden rounded-2xl bg-white/80">
-            <img
-              src={assetPath(project.image.src)}
-              alt={project.image.alt}
-              loading="lazy"
-              decoding="async"
-              className="h-full w-full max-w-full object-contain transition-transform duration-500 group-hover:scale-[1.025]"
-            />
+            <div
+              role="img"
+              aria-label={`Conceptual product flow: ${project.visualSteps.join(', then ')}`}
+              className="flex h-full flex-col justify-center gap-8 p-8 text-left text-zinc-900"
+            >
+              <span className="text-xs font-bold uppercase tracking-[0.18em]">Product flow / conceptual</span>
+              <ol className="grid grid-cols-3 gap-5">
+                {project.visualSteps.map((step, stepIndex) => (
+                  <li key={step} className="border-t border-zinc-300 pt-3">
+                    <span className="block text-xs text-emerald-800">0{stepIndex + 1}</span>
+                    <strong className="mt-4 block text-sm">{step}</strong>
+                  </li>
+                ))}
+              </ol>
+            </div>
           </div>
         </motion.div>
       </div>

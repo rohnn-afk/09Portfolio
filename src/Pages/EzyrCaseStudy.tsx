@@ -151,7 +151,7 @@ const EzyrCaseStudy = () => {
             The Neuron Engine
           </h1>
           <p className="mt-6 max-w-5xl font-sora text-[clamp(1.7rem,3vw,3.25rem)] font-semibold leading-tight tracking-[-0.025em] text-zinc-700 dark:text-zinc-300">
-            Turning a visual application model into production-ready Next.js software.
+            Turning a visual application model into runnable Next.js software.
           </p>
           <p className="mt-8 max-w-4xl text-lg leading-8 text-zinc-600 dark:text-zinc-400 sm:text-xl sm:leading-9">
             I designed and implemented Ezyr&apos;s core interpretation and code-generation system. It transformed the declarative data produced by the visual canvas into complete, independently runnable applications—then handed validated output to an isolated deployment pipeline.
@@ -305,7 +305,7 @@ const EzyrCaseStudy = () => {
               Ezyr&apos;s core path from visual composition to production deployment.
             </h2>
             <p className="mt-6 max-w-3xl text-lg leading-8 text-zinc-300 dark:text-zinc-700">
-              The Neuron Engine produced complete Next.js projects from structured application definitions, using a capability library spanning 21 application templates and 268 indexed reusable blocks. The wider orchestration and generation platform maintained 230 passing automated tests.
+              The Neuron Engine produced complete Next.js projects from structured application definitions, with reusable capabilities and automated checks supporting the generation flow. Snapshot counts are omitted until their dates and scope can be verified against the same release.
             </p>
           </div>
           <div className="rounded-3xl border border-white/15 bg-white/[0.08] p-6 dark:border-black/10 dark:bg-black/5">
