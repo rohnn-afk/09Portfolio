@@ -1,8 +1,16 @@
+import { EzyrArchitecture } from "./EzyrArchitecture";
+import { ProjectMedia } from "./ProjectMedia";
+import { projectMedia } from "../data/projectMedia";
 import type { ReactNode } from "react";
 import { projects } from "../data/projects";
 import { freelanceProjects } from "../data/freelance";
 import { ezyrExperience } from "../data/experience";
-import { engineStages, challenges, ownership } from "../data/ezyrCase";
+import {
+  engineStages,
+  challenges,
+  ownership,
+  ezyrReflection,
+} from "../data/ezyrCase";
 import { assetPath } from "../lib/assetPath";
 import type { Project } from "../types/project";
 
@@ -71,49 +79,6 @@ function Footer() {
 function Label({ children }: { children: ReactNode }) {
   return <p className="eyebrow">{children}</p>;
 }
-function Pipeline() {
-  return (
-    <figure className="pipeline">
-      <div className="pipeline-heading">
-        <span>THE NEURON ENGINE</span>
-        <span>CONCEPTUAL SYSTEM / 01</span>
-      </div>
-      <div className="pipeline-nodes">
-        <div>
-          <span className="node-icon" aria-hidden="true">
-            ▦
-          </span>
-          <strong>Visual canvas</strong>
-          <small>Structure · data · behavior</small>
-        </div>
-        <span className="connector" aria-hidden="true">
-          →
-        </span>
-        <div className="engine-node">
-          <span className="node-icon" aria-hidden="true">
-            ⌘
-          </span>
-          <strong>Neuron Engine</strong>
-          <small>Interpret · resolve · generate</small>
-        </div>
-        <span className="connector" aria-hidden="true">
-          →
-        </span>
-        <div>
-          <span className="node-icon" aria-hidden="true">
-            ↗
-          </span>
-          <strong>Next.js application</strong>
-          <small>Validate · build · deploy</small>
-        </div>
-      </div>
-      <figcaption>
-        <span className="status-dot" /> From visual intent to executable
-        software.<span>React / Next.js / AWS</span>
-      </figcaption>
-    </figure>
-  );
-}
 function Contact() {
   return (
     <section id="contact" className="contact section">
@@ -155,7 +120,8 @@ function Contact() {
 const summaries: Record<string, string> = {
   ViewCount: "A website event analytics prototype, from SDK to dashboard.",
   "09-Fitness.AI": "A voice-guided path from fitness goals to a saved plan.",
-  "Savana Dating Web App": "Profile discovery, mutual matches, and realtime chat.",
+  "Savana Dating Web App":
+    "Profile discovery, mutual matches, and realtime chat.",
 };
 function ProjectPreview({
   project,
@@ -166,33 +132,7 @@ function ProjectPreview({
 }) {
   return (
     <article className="project">
-      <a
-        className={`project-image project-image-${index}`}
-        href={project.websiteUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`Open the ${project.title} live demo in a new tab`}
-      >
-        <div
-          className="project-visual"
-          role="img"
-          aria-label={`Conceptual product flow: ${project.visualSteps.join(", then ")}`}
-        >
-          <span className="project-visual-kicker">Product flow / conceptual</span>
-          <ol>
-            {project.visualSteps.map((step, stepIndex) => (
-              <li key={step}>
-                <span>0{stepIndex + 1}</span>
-                <strong>{step}</strong>
-              </li>
-            ))}
-          </ol>
-          <span className="project-visual-caption">A closer look at the system</span>
-        </div>
-        <span className="image-link" aria-hidden="true">
-          ↗
-        </span>
-      </a>
+      <ProjectMedia title={project.title} {...projectMedia[project.title]} />
       <div className="project-content">
         <div className="project-meta">
           <span>
@@ -206,22 +146,32 @@ function ProjectPreview({
         <p className="project-summary">
           {summaries[project.title] || project.description}
         </p>
-        {project.title === "ViewCount" && (
-          <p className="project-state">
-            Prototype — visitor and view-count definitions need correction before
-            dashboard totals can be presented as validated analytics.
-          </p>
-        )}
+        <p className="project-contribution">
+          <strong>My work</strong> {projectMedia[project.title].contribution}
+        </p>
         <ul className="tags" aria-label="Technologies">
           {project.stack.map((item) => (
             <li key={item}>{item}</li>
           ))}
         </ul>
+        <div className="project-links">
+          <External href={project.websiteUrl}>Live demo</External>
+          {project.repositoryUrl && (
+            <External href={project.repositoryUrl}>GitHub</External>
+          )}
+        </div>
         <details>
           <summary>
             Inside the project <span aria-hidden="true">+</span>
           </summary>
           <div className="project-detail">
+            {" "}
+            {project.title === "ViewCount" && (
+              <p className="project-state">
+                Prototype — visitor and view-count definitions need correction
+                before dashboard totals can be presented as validated analytics.
+              </p>
+            )}
             <h4>The opportunity</h4>
             <p>{project.opportunity || project.description}</p>
             <h4>My contribution</h4>
@@ -263,8 +213,8 @@ export function Portfolio() {
             <div className="hero-aside">
               <span className="small-rule" />
               <p>
-                Software engineer and product engineer for teams turning
-                complex ideas into working software.
+                Software engineer and product engineer for teams turning complex
+                ideas into working software.
               </p>
               <p className="hero-proof">
                 At Ezyr, I grew from frontend intern to Technical Lead, leading
@@ -274,11 +224,11 @@ export function Portfolio() {
                 <a className="button" href="#experience">
                   Explore my experience <span aria-hidden="true">↓</span>
                 </a>
-                <External className="text-link" href={github}>
-                  GitHub
-                </External>
-                <External className="text-link" href={linkedin}>
-                  LinkedIn
+                <External
+                  className="text-link"
+                  href={assetPath("/Rohan-Sharma-Resume.pdf")}
+                >
+                  Résumé
                 </External>
               </div>
             </div>
@@ -296,13 +246,14 @@ export function Portfolio() {
           <article id="experience" className="featured">
             <div className="featured-copy">
               <div className="feature-meta">
-                <span>Technical leadership · Ezyr</span>
+                <span>Professional experience</span>
                 <span>May 2025 — Aug 2026</span>
               </div>
               <h3>
-                From canvas
-                <br />
-                to <em>running code.</em>
+                Ezyr
+                <span className="featured-product">
+                  No-code application platform
+                </span>
               </h3>
               <p>
                 I led engineering across Ezyr’s no-code application platform,
@@ -310,40 +261,53 @@ export function Portfolio() {
                 and cloud deployment.
               </p>
               <div className="feature-role">
-                <div className="role-journey" aria-label="Career progression at Ezyr">
-                  {ezyrExperience.roles.slice().reverse().map((role, index) => (
-                    <div className="role-stop" key={role.title}>
-                      <span className="role-stop-index">0{index + 1}</span>
-                      <div>
-                        <strong>{role.title}</strong>
-                        <span>{role.period}</span>
+                <div
+                  className="role-journey"
+                  aria-label="Career progression at Ezyr"
+                >
+                  {ezyrExperience.roles
+                    .slice()
+                    .reverse()
+                    .map((role, index) => (
+                      <div className="role-stop" key={role.title}>
+                        <span className="role-stop-index">0{index + 1}</span>
+                        <div>
+                          <strong>{role.title}</strong>
+                          <span>{role.period}</span>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
-                <ul className="feature-proof-list" aria-label="Selected Ezyr contributions">
-                  {ezyrExperience.roles[0].achievements.slice(0, 3).map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
               </div>
               <a className="button light" href={caseUrl}>
                 Explore the case study <Arrow />
               </a>
             </div>
-            <a
-              className="featured-visual"
-              href={caseUrl}
-              aria-label="Explore Ezyr's Neuron Engine case study"
-            >
-              <Pipeline />
-              <span className="figure-note">
-                01 — A conceptual view of the canvas-to-code lifecycle.
-              </span>
-            </a>
+            <div className="featured-visual">
+              <EzyrArchitecture />
+            </div>
           </article>
+          <aside
+            className="engineering-reflection"
+            aria-label="A lesson from Ezyr"
+          >
+            <Label>A lesson from Ezyr</Label>
+            <div>
+              <h3>{ezyrReflection.title}</h3>
+              <p>{ezyrReflection.summary}</p>
+              <a
+                className="text-link"
+                href={`${caseUrl}#engineering-reflection`}
+              >
+                Read the reflection <Arrow />
+              </a>
+            </div>
+          </aside>
         </section>
-        <section id="work" className="container section work-section personal-work">
+        <section
+          id="work"
+          className="container section work-section personal-work"
+        >
           <div className="section-heading">
             <Label>02 / Personal projects</Label>
             <h2>Product thinking, applied across different systems.</h2>
@@ -367,11 +331,18 @@ export function Portfolio() {
                 <span className="freelance-index">0{index + 1}</span>
                 <div className="freelance-copy">
                   <h3>{project.name}</h3>
-                  <p>{project.description}</p>
-                  <small>{project.note}</small>
+                  <details className="freelance-scope">
+                    <summary>
+                      Scope & status <span aria-hidden="true">+</span>
+                    </summary>
+                    <p>{project.description}</p>
+                    <p>{project.note}</p>
+                  </details>
                 </div>
                 <div className="freelance-links">
-                  {project.websiteUrl && <External href={project.websiteUrl}>View site</External>}
+                  {project.websiteUrl && (
+                    <External href={project.websiteUrl}>View site</External>
+                  )}
                   <External href={project.repositoryUrl}>Source</External>
                 </div>
               </article>
@@ -466,7 +437,7 @@ function CaseSection({
   children: ReactNode;
 }) {
   return (
-    <section className="case-section">
+    <section id={`case-${number.slice(0, 2)}`} className="case-section">
       <div>
         <Label>{number}</Label>
         <h2>{title}</h2>
@@ -481,8 +452,8 @@ export function CaseStudy() {
       <Header />
       <main id="main" className="case-page">
         <div className="container">
-          <a className="back-link" href={`${home}#work`}>
-            ← Back to selected work
+          <a className="back-link" href={`${home}#experience`}>
+            ← Back to experience
           </a>
           <header className="case-hero">
             <Label>Ezyr / Engineering case study / 2025–2026</Label>
@@ -501,7 +472,25 @@ export function CaseStudy() {
               <External href="https://ezyr.io/">Visit Ezyr</External>
             </div>
           </header>
-          <Pipeline />
+          <aside className="case-ownership">
+            <p className="eyebrow">My ownership / May 2025 – August 2026</p>
+            <p>
+              I led engineering across the visual editor, application
+              generation, AI runtime, and cloud delivery. This case study
+              follows the Neuron Engine: the connection between a visual canvas
+              and running software.
+            </p>
+          </aside>
+          <nav className="case-nav" aria-label="Case study sections">
+            {["Problem", "Approach", "Challenges", "Ownership", "Outcome"].map(
+              (label, index) => (
+                <a key={label} href={`#case-0${index + 1}`}>
+                  {label}
+                </a>
+              ),
+            )}
+          </nav>
+          <EzyrArchitecture wide />
           <CaseSection
             number="01 / The problem"
             title="The canvas described intent."
@@ -552,6 +541,12 @@ export function CaseStudy() {
                 <p>{challenge.description}</p>
               </div>
             ))}
+            <aside id="engineering-reflection" className="case-reflection">
+              <Label>What this changed for me</Label>
+              <h3>{ezyrReflection.title}</h3>
+              <p>{ezyrReflection.summary}</p>
+              <p>{ezyrReflection.detail}</p>
+            </aside>
           </CaseSection>
           <CaseSection number="04 / My contribution" title="Owned end to end.">
             <ul className="ownership">
@@ -559,10 +554,6 @@ export function CaseStudy() {
                 <li key={item}>{item}</li>
               ))}
             </ul>
-            <p className="muted">
-              Technical ownership and production delivery; this does not imply
-              large-team people management.
-            </p>
           </CaseSection>
           <CaseSection
             number="05 / The outcome"
@@ -570,10 +561,10 @@ export function CaseStudy() {
           >
             <p>
               The Neuron Engine produced complete Next.js projects from
-              structured application definitions, with reusable capabilities
-              and automated checks supporting the generation flow. I have left
-              snapshot counts out until their dates and scope can be verified
-              against the same release.
+              structured application definitions, with reusable capabilities and
+              automated checks supporting the generation flow. Generated
+              applications could then move through the container build and
+              deployment pipeline.
             </p>
             <aside className="disclosure">
               <h3>Conceptual disclosure</h3>
@@ -583,10 +574,6 @@ export function CaseStudy() {
                 implementation-specific architecture.
               </p>
             </aside>
-            <p className="content-gap">
-              Product interface imagery is omitted here; this case study keeps
-              the platform details at a conceptual, public-safe level.
-            </p>
           </CaseSection>
         </div>
         <Contact />

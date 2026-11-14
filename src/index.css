@@ -2,6 +2,8 @@
 @tailwind components;
 
 :root {
+  --type-small: 0.75rem;
+  --type-label: 0.875rem;
   --paper: #f4f1ea;
   --ink: #18211f;
   --muted: #56615b;
@@ -114,7 +116,7 @@ img {
 }
 .eyebrow {
   text-transform: uppercase;
-  font-size: 0.67rem;
+  font-size: var(--type-small);
   letter-spacing: 0.14em;
   font-weight: 700;
   line-height: 1.6;
@@ -178,7 +180,7 @@ nav a {
   gap: 24px;
 }
 .location {
-  font-size: 0.72rem;
+  font-size: var(--type-small);
   color: var(--muted);
 }
 .hero-grid {
@@ -244,7 +246,7 @@ nav a {
   border-bottom: 1px solid var(--line);
 }
 .hero-bottom {
-  font-size: 0.68rem;
+  font-size: var(--type-small);
   color: var(--muted);
   padding-bottom: 24px;
   border-bottom: 1px solid var(--line);
@@ -277,7 +279,7 @@ nav a {
   padding: 32px;
 }
 .feature-meta {
-  font-size: 0.6rem;
+  font-size: var(--type-small);
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
@@ -304,7 +306,7 @@ nav a {
   line-height: 1.8;
 }
 .feature-role span {
-  font-size: 0.65rem;
+  font-size: var(--type-small);
   color: #d1ddcd;
 }
 .role-journey {
@@ -334,7 +336,7 @@ nav a {
 }
 .role-stop-index {
   color: #c9d6bc;
-  font-size: 0.65rem;
+  font-size: var(--type-small);
   font-variant-numeric: tabular-nums;
 }
 .role-stop strong,
@@ -347,7 +349,7 @@ nav a {
 .role-stop div > span {
   margin-top: 3px;
   color: #d1ddcd;
-  font-size: 0.68rem;
+  font-size: var(--type-small);
 }
 .feature-proof-list {
   display: grid;
@@ -391,7 +393,7 @@ nav a {
   display: flex;
   justify-content: space-between;
   gap: 16px;
-  font-size: 0.56rem;
+  font-size: var(--type-small);
   letter-spacing: 0.1em;
   padding-bottom: 24px;
   border-bottom: 1px solid var(--line);
@@ -418,10 +420,10 @@ nav a {
   display: block;
 }
 .pipeline-nodes strong {
-  font-size: 0.7rem;
+  font-size: var(--type-small);
 }
 .pipeline-nodes small {
-  font-size: 0.55rem;
+  font-size: var(--type-small);
   color: var(--muted);
   margin-top: 8px;
 }
@@ -442,7 +444,7 @@ nav a {
 .pipeline figcaption {
   border-top: 1px solid var(--line);
   padding-top: 16px;
-  font-size: 0.58rem;
+  font-size: var(--type-small);
   line-height: 1.8;
 }
 .pipeline figcaption > span:last-child {
@@ -458,7 +460,7 @@ nav a {
   margin-right: 6px;
 }
 .figure-note {
-  font-size: 0.6rem;
+  font-size: var(--type-small);
   color: var(--muted);
   margin-top: 16px;
 }
@@ -471,110 +473,13 @@ nav a {
 .project-content {
   min-width: 0;
 }
-.project-image {
-  display: block;
-  position: relative;
-  background: #e1e5dc;
-  padding: 32px;
-  aspect-ratio: 1.45;
-  overflow: hidden;
-  min-width: 0;
-  width: 100%;
-}
-.project-visual {
-  width: 100%;
-  height: 100%;
-  min-height: 210px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: clamp(16px, 3vw, 32px);
-  background: var(--paper);
-  border: 1px solid var(--line);
-  color: var(--ink);
-  transition: border-color var(--ease);
-}
-.project-image:hover .project-visual {
-  border-color: var(--green);
-}
-.project-visual-kicker,
-.project-visual-caption {
-  color: var(--muted);
-  font-size: 0.6rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  line-height: 1.5;
-  text-transform: uppercase;
-}
-.project-visual ol {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(8px, 2vw, 20px);
-  margin: 28px 0;
-  padding: 0;
-  list-style: none;
-}
-.project-visual ol::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: var(--line);
-}
-.project-visual li {
-  position: relative;
-  display: grid;
-  align-content: start;
-  gap: clamp(14px, 2vw, 24px);
-  min-width: 0;
-  padding-top: 12px;
-}
-.project-visual li::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 18px;
-  height: 2px;
-  background: var(--green);
-}
-.project-visual li > span {
-  color: var(--green);
-  font-size: 0.62rem;
-  font-variant-numeric: tabular-nums;
-}
-.project-visual li > strong {
-  max-width: 12ch;
-  font-size: clamp(0.72rem, 1.2vw, 1rem);
-  line-height: 1.35;
-}
-.project-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  filter: drop-shadow(0 12px 12px #18211f12);
-}
-.image-link {
-  position: absolute;
-  bottom: 16px;
-  right: 16px;
-  background: var(--paper);
-  width: 32px;
-  height: 32px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-}
 .project-meta {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 8px;
   margin-block: 24px 12px;
-  font-size: 0.58rem;
+  font-size: var(--type-small);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--muted);
@@ -595,7 +500,7 @@ nav a {
   padding-left: 12px;
   border-left: 2px solid var(--green);
   color: var(--muted);
-  font-size: 0.72rem;
+  font-size: var(--type-small);
   line-height: 1.6;
 }
 .tags {
@@ -607,7 +512,7 @@ nav a {
   margin: 20px 0;
 }
 .tags li {
-  font-size: 0.6rem;
+  font-size: var(--type-small);
   padding: 5px 9px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -643,7 +548,7 @@ details[open] summary > span {
   line-height: 1.8;
 }
 .content-gap {
-  font-size: 0.72rem;
+  font-size: var(--type-small);
   color: var(--muted);
   border-left: 2px solid var(--line);
   padding-left: 16px;
@@ -666,7 +571,7 @@ details[open] summary > span {
 }
 .more-work p,
 .more-work span {
-  font-size: 0.72rem;
+  font-size: var(--type-small);
   color: var(--muted);
 }
 .freelance-heading {
@@ -694,7 +599,7 @@ details[open] summary > span {
 }
 .freelance-index {
   color: var(--green);
-  font-size: 0.68rem;
+  font-size: var(--type-small);
   font-variant-numeric: tabular-nums;
   padding-top: 4px;
 }
@@ -711,7 +616,7 @@ details[open] summary > span {
   display: block;
   margin-top: 6px;
   color: var(--muted);
-  font-size: 0.7rem;
+  font-size: var(--type-small);
   line-height: 1.6;
 }
 .freelance-links {
@@ -727,7 +632,7 @@ details[open] summary > span {
   align-items: center;
   gap: 5px;
   border-bottom: 1px solid var(--line);
-  font-size: 0.72rem;
+  font-size: var(--type-small);
   font-weight: 600;
 }
 .about {
@@ -760,7 +665,7 @@ details[open] summary > span {
   padding-block: 24px;
 }
 .capability > span {
-  font-size: 0.65rem;
+  font-size: var(--type-small);
   padding-top: 6px;
   color: var(--green);
 }
@@ -812,7 +717,7 @@ details[open] summary > span {
 }
 .email-address {
   display: block;
-  font-size: 0.72rem;
+  font-size: var(--type-small);
   margin-top: 16px;
   overflow-wrap: anywhere;
 }
@@ -826,7 +731,7 @@ details[open] summary > span {
   border-top: 1px solid #455149;
   margin-top: 64px;
   padding-top: 24px;
-  font-size: 0.7rem;
+  font-size: var(--type-small);
   flex-wrap: wrap;
 }
 .contact-bottom > div {
@@ -844,7 +749,7 @@ details[open] summary > span {
 }
 .footer p,
 .footer > a:last-child {
-  font-size: 0.7rem;
+  font-size: var(--type-small);
   color: var(--muted);
 }
 .back-link {
@@ -868,7 +773,7 @@ details[open] summary > span {
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
-  font-size: 0.7rem;
+  font-size: var(--type-small);
   margin-top: 32px;
 }
 .case-page > .container > .pipeline {
@@ -1096,7 +1001,7 @@ details[open] summary > span {
     width: 100%;
     justify-content: space-between;
     gap: 12px;
-    font-size: 0.7rem;
+    font-size: var(--type-small);
   }
   .hero-kicker {
     align-items: flex-start;
@@ -1111,7 +1016,7 @@ details[open] summary > span {
     max-width: 55%;
   }
   .hero-bottom {
-    font-size: 0.6rem;
+    font-size: var(--type-small);
   }
   .section {
     padding-block: 64px;
@@ -1122,7 +1027,7 @@ details[open] summary > span {
   .section-heading > p:last-child {
     max-width: 130px;
     text-align: right;
-    font-size: 0.7rem;
+    font-size: var(--type-small);
   }
   .featured-copy,
   .featured-visual {
@@ -1130,7 +1035,7 @@ details[open] summary > span {
   }
   .feature-meta {
     align-items: flex-start;
-    font-size: 0.52rem;
+    font-size: var(--type-small);
   }
   .project-image {
     padding: 24px;
@@ -1144,7 +1049,7 @@ details[open] summary > span {
   .section-heading > h2 {
     max-width: 17ch;
     text-align: right;
-    font-size: 0.7rem;
+    font-size: var(--type-small);
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1156,24 +1061,6 @@ details[open] summary > span {
   *::after {
     transition: none !important;
     animation: none !important;
-  }
-}
-@keyframes journey-trace {
-  from {
-    transform: scaleY(0);
-  }
-  to {
-    transform: scaleY(1);
-  }
-}
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .role-journey::before {
-      transform: scaleY(0);
-      animation: journey-trace linear both;
-      animation-timeline: view();
-      animation-range: entry 0% cover 48%;
-    }
   }
 }
 .education {

@@ -37,5 +37,9 @@ test("case study preserves disclosure and engineering evidence", () => {
   expect(
     screen.getByRole("heading", { name: "Conceptual disclosure" }),
   ).toBeInTheDocument();
-  expect(screen.getByText(/snapshot counts out until their dates and scope/)).toBeInTheDocument();
+  expect(
+    screen.getByText(
+      /applications could then move through the container build/,
+    ),
+  ).toBeInTheDocument();
 });

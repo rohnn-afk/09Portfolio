@@ -7,6 +7,15 @@ export const modelCapabilities = [
   "Project configuration and runtime requirements",
 ] as const;
 
+// Owner's reflection, edited for clarity from their account of the work.
+export const ezyrReflection = {
+  title: "Making complex systems easier to reason about.",
+  summary:
+    "Building stateful AI, integrating tools, and developing the Neuron interpreter taught me the value of clear contracts between parts of a system.",
+  detail:
+    "The interpreter’s breadth was especially challenging in production. High-level architecture helped me understand how the pieces fit together; low-level design helped me define their responsibilities and contracts. That experience changed how I approach complex engineering work.",
+} as const;
+
 export const engineStages = [
   {
     name: "Validate and normalize",
