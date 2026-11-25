@@ -12,14 +12,25 @@ const previewServer = await preview({
 
 try {
   const base = process.env.PAGES_BASE || '/';
-  for (const route of ['', 'experience/ezyr/']) {
+  const foundersPath = 'projects/founders-lens/';
+  const pages = [
+    ['', ['I build products', `href="${base}${foundersPath}"`]],
+    ['experience/ezyr/', ['The Neuron']],
+    [foundersPath, [
+      '<title>Founder’s Lens | Rohan Sharma</title>',
+      '804 provider-reported tokens',
+      'SOLID in practice',
+      'FOR UPDATE SKIP LOCKED',
+    ]],
+  ] as const;
+  for (const [route, markers] of pages) {
     const path = `${base}${route}`;
     const address = previewServer.httpServer.address();
     if (!address || typeof address === 'string') throw new Error('Preview server did not bind a port');
     const response = await fetch(`http://${host}:${address.port}${path}`);
     const html = await response.text();
 
-    if (!response.ok || !html.includes('<main') || !html.includes(route ? 'The Neuron' : 'I build products')) {
+    if (!response.ok || !html.includes('<main') || !markers.every((marker) => html.includes(marker))) {
       throw new Error(`Preview smoke test failed for ${path} (${response.status}).`);
     }
 

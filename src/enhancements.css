@@ -201,6 +201,42 @@ summary,
 .project-grid {
   margin-top: var(--space-8);
 }
+.founders-feature {
+  display: grid;
+  gap: var(--space-6);
+  align-items: center;
+  margin-top: var(--space-8);
+  padding-block: var(--space-6);
+  border-block: 1px solid var(--line);
+}
+.founders-feature h3 {
+  margin-top: var(--space-3);
+}
+.founders-feature .project-links a:first-child {
+  font-weight: 700;
+}
+.founders-example {
+  padding: clamp(1rem, 4vw, 2rem);
+  border: 1px solid var(--line);
+}
+.founders-example blockquote {
+  margin: 0 0 var(--space-4);
+  color: var(--ink);
+  font-size: 1.2rem;
+}
+.founders-example > p {
+  margin: 0;
+  color: var(--muted);
+}
+.founders-example strong {
+  display: block;
+  color: var(--ink);
+}
+@media (min-width: 768px) {
+  .founders-feature {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
 .project-media {
   min-width: 0;
 }

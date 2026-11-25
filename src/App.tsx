@@ -1,10 +1,12 @@
 import { Route, Routes } from "react-router-dom";
-import { Portfolio, CaseStudy } from "./components/Editorial";
+import { Portfolio, CaseStudy, FoundersLensCaseStudy } from "./components/Editorial";
+import { foundersLens } from "./data/foundersLens";
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Portfolio />} />
       <Route path="/experience/ezyr" element={<CaseStudy />} />
+      <Route path={`/${foundersLens.path}`} element={<FoundersLensCaseStudy />} />
       <Route
         path="*"
         element={

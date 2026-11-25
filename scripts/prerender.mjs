@@ -10,17 +10,21 @@ const server = await createServer({
   appType: "custom",
 });
 try {
-  const { Portfolio, CaseStudy } = await server.ssrLoadModule(
+  const { Portfolio, CaseStudy, FoundersLensCaseStudy } = await server.ssrLoadModule(
     "/src/components/Editorial.tsx",
   );
+  const { foundersLens } = await server.ssrLoadModule("/src/data/foundersLens.ts");
+  const pages = {
+    "": Portfolio,
+    "experience/ezyr/": CaseStudy,
+    [foundersLens.path]: FoundersLensCaseStudy,
+  };
   const template = await readFile("dist/index.html", "utf8");
-  for (const route of ["", "experience/ezyr/", "404.html"]) {
+  for (const route of [...Object.keys(pages), "404.html"]) {
     const markup =
       route === "404.html"
         ? `<main class="container section"><h1>Page not found.</h1><a href="${base}">Back to portfolio</a></main>`
-        : renderToString(
-            createElement(route === "experience/ezyr/" ? CaseStudy : Portfolio),
-          );
+        : renderToString(createElement(pages[route]));
     let html = template.replace(
       '<div id="root"></div>',
       `<div id="root">${markup}</div>`,
@@ -38,6 +42,13 @@ try {
         "From frontend engineering to technical leadership at Ezyr, with selected personal products and freelance work.",
         "How Rohan Sharma led engineering across Ezyr’s visual application platform, generation pipeline, AI runtime and deployment.",
       );
+    }
+    if (route === foundersLens.path) {
+      const title = `${foundersLens.title} | Rohan Sharma`;
+      html = html
+        .replace(/<title>[^<]*<\/title>/, `<title>${title}</title>`)
+        .replace(/(<meta\s+property="og:title"\s+content=")[^"]*"/, `$1${title}"`)
+        .replace(/(<meta\s+(?:name="description"|property="og:description")\s+content=")[^"]*"/g, `$1${foundersLens.description}"`);
     }
     if (route === "404.html")
       html = html.replace(
@@ -64,7 +75,7 @@ try {
   if (origin)
     await writeFile(
       "dist/sitemap.xml",
-      `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${["", "experience/ezyr/"].map((route) => `<url><loc>${origin}${base}${route}</loc></url>`).join("")}</urlset>`,
+      `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${Object.keys(pages).map((route) => `<url><loc>${origin}${base}${route}</loc></url>`).join("")}</urlset>`,
     );
 } finally {
   await server.close();

@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { projects } from "../data/projects";
 import { freelanceProjects } from "../data/freelance";
 import { ezyrExperience } from "../data/experience";
+import { foundersLens } from "../data/foundersLens";
 import {
   engineStages,
   challenges,
@@ -193,6 +194,43 @@ function ProjectPreview({
     </article>
   );
 }
+function FoundersLensExample() {
+  return (
+    <figure className="founders-example project-media">
+      <blockquote>
+        <p>Local shops complain about packaging waste. Would they pay for reusable crates?</p>
+      </blockquote>
+      <p><strong>Proposed test</strong> Offer a short paid pilot to five shop owners. Decide ahead of time how many commitments would justify buying inventory.</p>
+      <figcaption>Illustrative conversation from the public preview.</figcaption>
+    </figure>
+  );
+}
+
+function FoundersLensFeature() {
+  return (
+    <article className="project founders-feature">
+      <div className="project-content">
+        <Label>Featured personal project / Full-stack engineering</Label>
+        <h3><a href={assetPath(foundersLens.path)}>{foundersLens.title}</a></h3>
+        <p className="project-summary">{foundersLens.description}</p>
+        <p className="project-contribution">
+          <strong>My work</strong> Built the founder workspace and the backend
+          pipeline that queues AI requests, saves replies, and records provider usage.
+        </p>
+        <ul className="tags" aria-label="Technologies">
+          {foundersLens.stack.map((technology) => <li key={technology}>{technology}</li>)}
+        </ul>
+        <div className="project-links">
+          <a href={assetPath(foundersLens.path)}>Read case study <span aria-hidden="true">→</span></a>
+          <External href={foundersLens.preview}>Public preview</External>
+          <External href={foundersLens.repository}>GitHub</External>
+        </div>
+      </div>
+      <FoundersLensExample />
+    </article>
+  );
+}
+
 export function Portfolio() {
   const selection = [projects[1], projects[0], projects[2]];
   return (
@@ -312,6 +350,7 @@ export function Portfolio() {
             <Label>02 / Personal projects</Label>
             <h2>Product thinking, applied across different systems.</h2>
           </div>
+          <FoundersLensFeature />
           <div className="project-grid">
             {selection.map((project, index) => (
               <ProjectPreview
@@ -446,6 +485,157 @@ function CaseSection({
     </section>
   );
 }
+export function FoundersLensCaseStudy() {
+  const source = `${foundersLens.repository}/blob/main`;
+  return (
+    <div id="top">
+      <Header />
+      <main id="main" className="case-page">
+        <div className="container">
+          <a className="back-link" href={`${home}#work`}>← Back to projects</a>
+          <header className="case-hero">
+            <Label>Personal project / Engineering case study</Label>
+            <h1>Founder’s <em>Lens.</em></h1>
+            <p>{foundersLens.description}</p>
+            <div className="case-meta">
+              <span>Role / Full-stack Developer</span>
+              <External href={foundersLens.preview}>Public preview</External>
+              <External href={foundersLens.repository}>GitHub</External>
+            </div>
+          </header>
+          <aside className="case-ownership">
+            <p className="eyebrow">My contribution</p>
+            <p>I built the Next.js workspace and the TypeScript pipeline behind it, from authenticated submission to background generation, response storage, and usage accounting.</p>
+          </aside>
+          <nav className="case-nav" aria-label="Case study sections">
+            {["Product", "System design", "Request lifecycle", "SOLID in practice", "Failure handling", "Verification", "What I learned"].map((label, index) => (
+              <a key={label} href={`#case-0${index + 1}`}>{label}</a>
+            ))}
+          </nav>
+          <CaseSection number="01 / Product" title="From a promising idea to a test.">
+            <p>A founder hears shop owners complain about packaging waste and considers a reusable-crate subscription. The complaint is evidence of a problem. Whether those shops will pay for a subscription is still an open question.</p>
+            <FoundersLensExample />
+            <p>I designed the workspace around that decision. A founder can record the idea, work through it in a conversation, and return to a saved reply when deciding what to test.</p>
+          </CaseSection>
+          <CaseSection number="02 / System design" title="One application, separate execution paths.">
+            <p>
+              I organized the backend as a modular monolith with separate API,
+              dispatcher, and worker processes. Next.js owns the interaction
+              with the founder. The API owns admission and workspace access.
+              The dispatcher moves committed work onto the queue, and the
+              worker owns generation and finalization.
+            </p>
+            <p>
+              PostgreSQL is the source of truth for messages, attempts, and
+              usage. Redis carries work between processes. This keeps provider
+              latency out of the submission request and lets the worker be
+              operated independently. The tradeoff is that publishing and
+              execution can fail at different points, so each needs its own
+              recovery rules.
+            </p>
+            <div className="project-links">
+              <External href={`${source}/Docs/architecture/HLD.md`}>High-level design</External>
+              <External href={`${source}/Docs/lld/02-api-security/openapi.yaml`}>OpenAPI specification</External>
+            </div>
+          </CaseSection>
+          <CaseSection number="03 / Request lifecycle" title="What happens after the founder presses send?">
+            <ol className="engine-stages">
+              <li><h3>Accept the question</h3><p>Next.js takes the founder’s input. The Express API uses Clerk identity and workspace ownership to scope the request, then validates the payload with Zod.</p></li>
+              <li><h3>Commit the work</h3><p>PostgreSQL stores the message, generation attempt, and outbox entry in one transaction. A committed request therefore has a durable record ready for dispatch even if publishing to Redis is interrupted.</p></li>
+              <li><h3>Run the generation</h3><p>A separate dispatcher publishes the attempt to BullMQ on Redis. A worker claims it, loads the scoped conversation context, and calls Groq outside the database transaction.</p></li>
+              <li><h3>Save the result</h3><p>The worker records provider usage and finalizes the attempt. The assistant reply is stored with the conversation so the founder can return to it.</p></li>
+            </ol>
+            <p>
+              The queue carries a generation ID. The worker uses that reference
+              to load the conversation context it is authorized to read, so
+              private message text stays out of the Redis job payload.
+            </p>
+            <div className="project-links">
+              <External href={`${source}/apps/api/src/submission/repository.ts`}>Submission transaction</External>
+              <External href={`${foundersLens.repository}/tree/main/apps/dispatcher/src`}>Dispatcher source</External>
+              <External href={`${foundersLens.repository}/tree/main/apps/worker/src`}>Worker source</External>
+              <External href={`${source}/Docs/README.md`}>Architecture and engineering docs</External>
+            </div>
+          </CaseSection>
+          <CaseSection number="04 / SOLID in practice" title="Provider code changes at the edge.">
+            <p>
+              The provider boundary is where SOLID made a practical difference.
+              I wanted to exercise the whole generation path in CI without
+              sending a live request or letting provider-specific behavior leak
+              into the worker.
+            </p>
+            <div className="case-item">
+              <h3>Single responsibility</h3>
+              <p>The worker coordinates the attempt, the repository owns durable state transitions, and the provider adapter translates an external response into the app’s result format.</p>
+            </div>
+            <div className="case-item">
+              <h3>Open/closed and dependency inversion</h3>
+              <p>The worker receives its generation function as a dependency. The runtime can wire in Groq or a deterministic implementation without changing the worker’s lease and finalization logic.</p>
+            </div>
+            <div className="case-item">
+              <h3>Interface segregation and substitutability</h3>
+              <p>The provider contract exposes one operation, a bounded generation call that accepts a cancellation signal. Implementations share the same result shape for text, usage, and response ID. The deterministic implementation lets tests verify orchestration independently of answer quality.</p>
+            </div>
+            <div className="project-links">
+              <External href={`${source}/apps/worker/src/founder-provider.ts`}>Provider contract and test implementation</External>
+              <External href={`${source}/apps/worker/src/generation-worker.ts`}>Worker coordinator</External>
+            </div>
+          </CaseSection>
+          <CaseSection number="05 / Failure handling" title="What retries are allowed to repeat.">
+            <h3>The browser resends a question</h3>
+            <p>The submission is scoped to an idempotency key and request fingerprint. A matching retry can return the original acceptance. Reusing the key for different input is rejected, so a network retry cannot silently become a second generation.</p>
+            <h3>The dispatcher is interrupted</h3>
+            <p>Dispatchers claim due outbox rows with PostgreSQL’s <code>FOR UPDATE SKIP LOCKED</code>. Expired claims can be picked up again, and transient publication failures use capped backoff with jitter. BullMQ uses the generation ID as the job ID, giving repeated publication attempts a stable identity.</p>
+            <h3>A worker finishes after its lease expires</h3>
+            <p>Finalization checks the active lease epoch so a late worker cannot overwrite a newer attempt state. Getting a response from Groq and having permission to save it are separate events.</p>
+            <p>There is also a window where Groq may have done work before the system can confirm the result. A durable receipt records measured token usage when the provider reports it. If execution may have started and no receipt is available, accounting can preserve the outcome as unknown. This makes the uncertainty visible during recovery.</p>
+            <div className="project-links">
+              <External href={`${source}/apps/dispatcher/src/outbox-repository.ts`}>Outbox claims</External>
+              <External href={`${source}/apps/worker/src/generation-repository.ts`}>Lease and finalization logic</External>
+              <External href={`${source}/apps/worker/src/provider-accounting.ts`}>Provider usage accounting</External>
+            </div>
+          </CaseSection>
+          <CaseSection number="06 / Verification" title="What I verified and how.">
+            <h3>Contracts and CI</h3>
+            <p>
+              The design documents HTTP behavior in OpenAPI, and the implemented
+              submission path validates inputs with Zod. GitHub Actions exercises
+              the queue and database together using disposable PostgreSQL and
+              Redis fixtures. Separate checks audit dependencies and scan for
+              secrets. The staging runbook ties deployment to the tested commit
+              and documents readiness checks and rollback.
+            </p>
+            <h3>Private data and provider limits</h3>
+            <p>
+              The API checks workspace ownership after authenticating the user.
+              The worker reads context through a restricted PostgreSQL
+              projection bound to its lease. The provider adapter assembles a
+              versioned prompt from the current message and recent turns that
+              fit the input budget, keeping both context and execution bounded.
+            </p>
+            <h3>Public preview and local acceptance</h3>
+            <p>The Render deployment is a read-only product preview with an illustrative conversation. It opens without an account. The authenticated workspace and live AI are available in the local acceptance environment described in the repository.</p>
+            <p>The documented local run followed a signed-in founder’s submission through Groq, saved the assistant reply, and settled <strong>804 provider-reported tokens</strong> for that request.</p>
+            <div className="project-links">
+              <External href={foundersLens.preview}>Explore the preview</External>
+              <External href={`${source}/scripts/p9-local-runtime.md`}>Local acceptance run</External>
+              <External href={`${foundersLens.repository}/tree/main/tests`}>Automated tests</External>
+              <External href={`${source}/.github/workflows/ci.yml`}>CI workflow</External>
+              <External href={`${source}/RENDER-STAGING.md#public-portfolio-demo`}>Render runbook</External>
+            </div>
+          </CaseSection>
+          <CaseSection number="07 / What I learned" title="Design around what the system can confirm.">
+            <p>Building this taught me to distinguish three moments that feel like one action in the interface. The API accepts the question, the provider performs work, and the application saves a reply. Once I modeled those separately, I could reason about retries, late workers, and what the founder should see if generation stops halfway through.</p>
+            <p>I applied the same discipline to verification. I used the public example to make the founder’s workflow easy to understand and a signed-in local run to verify persistence and accounting across the full stack.</p>
+          </CaseSection>
+        </div>
+        <Contact />
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
 export function CaseStudy() {
   return (
     <div id="top">
@@ -546,6 +736,7 @@ export function CaseStudy() {
               <h3>{ezyrReflection.title}</h3>
               <p>{ezyrReflection.summary}</p>
               <p>{ezyrReflection.detail}</p>
+              <p>{ezyrReflection.takeaway}</p>
             </aside>
           </CaseSection>
           <CaseSection number="04 / My contribution" title="Owned end to end.">

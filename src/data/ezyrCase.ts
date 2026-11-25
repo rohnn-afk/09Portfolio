@@ -7,13 +7,14 @@ export const modelCapabilities = [
   "Project configuration and runtime requirements",
 ] as const;
 
-// Owner's reflection, edited for clarity from their account of the work.
 export const ezyrReflection = {
-  title: "Making complex systems easier to reason about.",
+  title: "A valid build can still run the wrong workflow.",
   summary:
-    "Building stateful AI, integrating tools, and developing the Neuron interpreter taught me the value of clear contracts between parts of a system.",
+    "At Ezyr, a generated Next.js app could compile while a workflow still read the wrong value. Building the Neuron interpreter taught me to follow a binding from the visual editor to the running app and check what each stage was responsible for preserving.",
   detail:
-    "The interpreter’s breadth was especially challenging in production. High-level architecture helped me understand how the pieces fit together; low-level design helped me define their responsibilities and contracts. That experience changed how I approach complex engineering work.",
+    "Take a workflow step that consumes an earlier step’s output. The canvas definition identifies the source, the interpreter resolves the reference in context, and the generator carries it into the executable workflow. That gives me a way to narrow down a failure. A missing reference belongs at definition validation. A valid reference that points to the wrong output belongs in interpretation or code generation. A successful build tells me the project compiles. Checking the data flow tells me whether the behavior survived the translation.",
+  takeaway:
+    "I now review a new capability by tracing one real interaction across those boundaries. I look for where input is checked, where meaning is resolved, and where the generated behavior can be verified. Keeping component-specific requirements inside the capability contract gives each new block a clear place to fit and keeps the rest of the pipeline easier to debug.",
 } as const;
 
 export const engineStages = [
